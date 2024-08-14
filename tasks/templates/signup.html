@@ -1,24 +1,41 @@
-{% extends 'base.html' %}
-
+{% extends 'base.html' %} 
 
 {% block content %}
-<h1>Signup</h1>
 
-{{error}}
+<main class="container">
+  <div class="row">
+    <div class="col-md-4 offset-md-4 mt-5">
+      <form action="/register/" method="POST" class="card card-body">
+        <h1 class="text-center">Registro</h1>
+
+       
+        <!--Token de seguridad midlleware-->
+        {% csrf_token %}
+
+        <div class="mb-3">
+            <label for="username">Usuario:</label>
+          <input type="text" name="username" id="username" class="form-control" placeholder="Ingresa tu usuario">
+        </div>
+
+        <div class="mb-3">
+            <label for="password1">Contraseña:</label>
+          <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingresa una contraseña">
+        </div>
 
 
-<form action="/register/" method="POST">
+        <div class="mb-3">
+            <label for="password2">Confirma tu contraseña:</label>
+          <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirma la contraseña">
+        </div>
 
-    {% csrf_token %} <!--Token de seguridad midlleware-->
+        <div class="text-center mb-2">
+          {{error}}
+        </div>
 
-    <!-- Llamada de variable que contiene el formulario de registro -->
-    {{formRegister.as_p}}  <!-- as_pi es una propiedad para agrupoar mejor los elementos de el formulario-->
-
-
-    <button>
-        Registrar 
-    </button>
-
-
-</form>
+        <button class="btn btn-primary">Registrar</button>
+        
+      </form>
+    </div>
+  </div>
+</main>
 {% endblock%}
