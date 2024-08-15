@@ -13,24 +13,34 @@
         {% csrf_token %}
 
         <div class="mb-3">
-            <label for="username">Usuario:</label>
-          <input type="text" name="username" id="username" class="form-control" placeholder="Ingresa tu usuario">
+            <label for="username"><i class="fa-solid fa-user" style="color: #000000;"></i> Ingresar usuario</label>
+            
+          <input type="text" name="username" id="username" class="form-control" placeholder="Example: Mario123" required>
+          
         </div>
 
         <div class="mb-3">
-            <label for="password1">Contraseña:</label>
-          <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingresa una contraseña">
+            <label for="password1"><i class="fa-solid fa-lock" style="color: #000000;"></i> Ingresar contraseña</label>
+          <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingresa una contraseña" required>
         </div>
 
 
         <div class="mb-3">
-            <label for="password2">Confirma tu contraseña:</label>
-          <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirma la contraseña">
+            <label for="password2">Confirmar contraseña</label>
+          <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirma la contraseña" required>
         </div>
 
-        <div class="text-center mb-2">
-          {{error}}
-        </div>
+        
+        {% if error %}
+
+              <div class="alert alert-danger" role="alert">
+                    <div class="text-center mb-2">
+                        <i class="fa-solid fa-circle-exclamation"></i> {{error}}
+                    </div> 
+              </div>
+
+        {% endif %}
+
 
         <button class="btn btn-primary">Registrar</button>
         
