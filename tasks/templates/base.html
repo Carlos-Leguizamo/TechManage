@@ -10,10 +10,7 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -32,36 +29,25 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
-            <!-- Seccion de los items modificados con Bootstrap -->} {% if
-            user.is_authenticated %}
-
-            <li class="nav-item">
-              <a href="/dashboard" class="nav-link">Tasks</a>
-            </li>
-
-            <li class="nav-item">
-              <a href="/logout" class="nav-link">Cerrar Sesion</a>
-            </li>
-
-            {% else %}
-
-            <li class="nav-item">
+            <!-- Seccion de los items modificados con Bootstrap -->}
+            
+            <li class="nav-item mx-1">
               <a href="/" class="nav-link">Inicio</a>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item mx-4">
               <a href="/register" class="nav-link">Resgitrarse</a>
             </li>
 
             <li class="nav-item">
               <a href="/signin" class="nav-link">Ingresar</a>
             </li>
-            {% endif %}
           </ul>
         </div>
       </div>
     </nav>
 
-    {% block content %} {% endblock %}
+    {% block content %} 
+    {% endblock %}
   </body>
 </html>
