@@ -9,11 +9,15 @@ from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.conf import settings
+from .models import TokenVerification
 
 
-# Global variable to store the token
+# Variables globales para el token y su expiración
 VERIFICATION_TOKEN = None
 TOKEN_EXPIRATION = None
+
+
+
 
 
 # Create your views here.
@@ -24,6 +28,7 @@ def home(request):
 
 
 # Logica de registro de Usuarios
+
 
 def register(request):
     if request.method == "GET":
@@ -102,30 +107,34 @@ def generate_token():
 
 
 #Logica de envio de codigo por medio de email 
+
 def send_verification_email(request):
     if request.method == 'POST':
-        global VERIFICATION_TOKEN, TOKEN_EXPIRATION
-        VERIFICATION_TOKEN = generate_token()
-        TOKEN_EXPIRATION = timezone.now() + timezone.timedelta(minutes=5) #Despues de 5 minutos el codigo enviado al email expira 
+        token = generate_token()
+        expiration = timezone.now() + timezone.timedelta(minutes=5)
+        TokenVerification.objects.create(token=token, expiration=expiration)
+        
         send_mail(
             'Código de verificación',
-            f'Este es tu código de verificación: {VERIFICATION_TOKEN}',
+            f'Este es tu código de verificación: {token}',
             settings.DEFAULT_FROM_EMAIL,
-            ['eldermoreno450@gmail.com']  # Correo del administrador predeterminado
+            ['eldermoreno450@gmail.com']
         )
-        return redirect('verify_token')  # Redirigir a la vista de verificación
+        return redirect('verify_token')
     return render(request, 'send_token.html')
 
-
-#Logica de verificacion si el codigo es valido o no 
 def verify_token_view(request):
     if request.method == 'POST':
         token = request.POST.get('token')
-        if token == VERIFICATION_TOKEN and timezone.now() < TOKEN_EXPIRATION:
-            return redirect('register')  # Redirigir al formulario de registro si es valido
-        else:
-            return render(request, 'verify_token.html', {'error': 'Código inválido o expirado'}) #Si no es valido, quedarse en la vista y lanzar el errror
-    return render(request, 'verify_token.html')        
-          
+        try:
+            verification_token = TokenVerification.objects.get(token=token)
+            if verification_token.is_valid():
+                verification_token.delete()  # Elimina el token después de la verificación
+                return redirect('register')
+            else:
+                return render(request, 'verify_token.html', {'error': 'Código expirado'})
+        except TokenVerification.DoesNotExist:
+            return render(request, 'verify_token.html', {'error': 'Código inválido'})
+    return render(request, 'verify_token.html')
 
 
