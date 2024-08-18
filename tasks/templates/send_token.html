@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitar Código de Verificación</title>
+</head>
+<body>
+    <h1>Solicitar Código de Verificación</h1>
+    <form method="post" action="{% url 'send_code' %}">
+        {% csrf_token %}
+        <button type="submit">Solicitar Código</button>
+    </form>
+</body>
+</html>
+
+{% endblock %}

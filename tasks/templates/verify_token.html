@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificar Código</title>
+</head>
+<body>
+    <h1>Ingresa el Código de Verificación</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post" action="{% url 'verify_token' %}">
+        {% csrf_token %}
+        <input type="text" name="token" placeholder="Código de Verificación">
+        <button type="submit">Verificar</button>
+    </form>
+</body>
+</html>
+
+{% endblock %}

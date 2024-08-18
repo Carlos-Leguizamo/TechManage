@@ -3,6 +3,17 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm # Cla
 from django.contrib.auth.models import User  # Clase para registrar usuarios
 from django.contrib.auth import login, logout, authenticate # Crea la cookies en el navegador
 from django.db import IntegrityError
+import random
+import string
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.utils import timezone
+from django.conf import settings
+
+
+# Global variable to store the token
+VERIFICATION_TOKEN = None
+TOKEN_EXPIRATION = None
 
 
 # Create your views here.
@@ -10,6 +21,7 @@ from django.db import IntegrityError
 
 def home(request):
     return render(request, "home.html")
+
 
 # Logica de registro de Usuarios
 
@@ -76,8 +88,44 @@ def signin (request):
         else:
             login(request, user)  # Iniciar sesión del usuario - Guaradar sesion del usuario
             return redirect('dashboard')
-       
-        
+
+
+
+#LOGICA DE ENVIO DE TOKEN PARA PASAR AL FORMULARIO DE RESGITRO 
+
+
+
+#Logica de generar codigo de manera ramdon con la libreria ramdon
+def generate_token():
+    #Genera un token de 6 caracteres.
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
+
+
+#Logica de envio de codigo por medio de email 
+def send_verification_email(request):
+    if request.method == 'POST':
+        global VERIFICATION_TOKEN, TOKEN_EXPIRATION
+        VERIFICATION_TOKEN = generate_token()
+        TOKEN_EXPIRATION = timezone.now() + timezone.timedelta(minutes=5) #Despues de 5 minutos el codigo enviado al email expira 
+        send_mail(
+            'Código de verificación',
+            f'Este es tu código de verificación: {VERIFICATION_TOKEN}',
+            settings.DEFAULT_FROM_EMAIL,
+            ['eldermoreno450@gmail.com']  # Correo del administrador predeterminado
+        )
+        return redirect('verify_token')  # Redirigir a la vista de verificación
+    return render(request, 'send_token.html')
+
+
+#Logica de verificacion si el codigo es valido o no 
+def verify_token_view(request):
+    if request.method == 'POST':
+        token = request.POST.get('token')
+        if token == VERIFICATION_TOKEN and timezone.now() < TOKEN_EXPIRATION:
+            return redirect('register')  # Redirigir al formulario de registro si es valido
+        else:
+            return render(request, 'verify_token.html', {'error': 'Código inválido o expirado'}) #Si no es valido, quedarse en la vista y lanzar el errror
+    return render(request, 'verify_token.html')        
           
 
 
