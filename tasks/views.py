@@ -10,6 +10,7 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.conf import settings
 from .models import TokenVerification
+from django.contrib.auth.decorators import login_required #Seguridad de las rutas y no permitir acceso mediantre ellas si no esta logueado
 
 
 # Variables globales para el token y su expiración
@@ -29,7 +30,7 @@ def home(request):
 
 # Logica de registro de Usuarios
 
-
+# @login_required
 def register(request):
     if request.method == "GET":
         return render(request, "signup.html", {

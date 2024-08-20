@@ -8,14 +8,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solicitar Código de Verificación</title>
+
+    <style>
+        .text-justify {
+            text-align: justify;
+        }
+
+        .tamaño{
+            font-size: 20px;
+            font-weight: normal;
+        }
+    </style>
 </head>
 <body>
-    <h1>Solicitar Código de Verificación</h1>
-    <form method="post" action="{% url 'send_code' %}">
-        {% csrf_token %}
-        <button type="submit">Solicitar Código</button>
-    </form>
+    <div class="container d-flex justify-content-center align-items-center mt-5">
+        <div class="card border-dark text-center p-4">
+            <h1 class="mb-2">Solicitar Código de Verificación</h1>
+            <h2 class="h4 text-justify tamaño">
+                Para completar su registro, es necesario que pase por un proceso de
+                validación mediante un código de verificación. Por favor,
+                solicite este código al administrador del sistema. Una vez que haya recibido el código,
+                podrá ingresarlo aquí para continuar con el proceso de registro.
+            </h2>
+            <form method="post" action="{% url 'send_token' %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary mt-3">Solicitar Código</button>
+            </form>
+            <p class="mt-3"> ¿Ya tienes cuenta? <a href="{% url 'sigin' %}" class="text-primary" style="text-decoration: underline;">Inicia sesión</a></p>
+        </div>
+    </div>
 </body>
+
 </html>
 
 {% endblock %}

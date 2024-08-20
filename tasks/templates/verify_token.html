@@ -12,15 +12,23 @@
     <title>Verificar Código</title>
 </head>
 <body>
-    <h1>Ingresa el Código de Verificación</h1>
-    {% if error %}
-        <p style="color: red;">{{ error }}</p>
-    {% endif %}
-    <form method="post" action="{% url 'verify_token' %}">
-        {% csrf_token %}
-        <input type="text" name="token" placeholder="Código de Verificación">
-        <button type="submit">Verificar</button>
-    </form>
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+        <div class="card border-dark text-center p-4" style="max-width: 30rem;">
+            <div class="card-body">
+                <h1 class="card-title">Ingresa el Código de Verificación</h1>
+                {% if error %}
+                    <p class="text-danger">{{ error }}</p>
+                {% endif %}
+                <form method="post" action="{% url 'verify_token' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="token" placeholder="Código de Verificación">
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Verificar</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
 
