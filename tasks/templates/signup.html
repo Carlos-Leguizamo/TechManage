@@ -1,24 +1,19 @@
 {% extends 'base.html' %} 
-
 {% block content %}
-
 <main class="container pb-5">
   <div class="row">
     <div class="col-md-4 offset-md-4 mt-5">
       <form action="/register/" method="POST" class="card card-body">
         <h1 class="text-center">Registro</h1>
-
        
         <!--Token de seguridad midlleware-->
         {% csrf_token %}
-
         <div class="mb-3">
             <label for="username"><i class="fa-solid fa-user" style="color: #000000;"></i> Ingresar usuario</label>
             
           <input type="text" name="username" id="username" class="form-control" placeholder="Mario123" required>
           
         </div>
-
         <div class="mb-3">
           <label for="first_name"><i class="fa-solid fa-person" style="color: #000000;" ></i> Nombres</label>
           
@@ -31,36 +26,33 @@
         <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Bohorquez Garcia" required>
         
         </div>
-
         <div class="mb-3">
           <label for="email"><i class="fa-solid fa-envelope" style="color: #000000;"></i> Email</label>
           
         <input type="email" name="email" id="email" class="form-control" placeholder="Example@example.com" required>
         
         </div>
-
         <div class="mb-3">
-            <label for="password1"><i class="fa-solid fa-lock" style="color: #000000;"></i> Ingresar contraseña</label>
-          <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingresa una contraseña" required>
-        </div>
-
-
+          <label for="password1"><i class="fa-solid fa-lock" style="color: #000000;"></i> Ingresar contraseña</label>
+          <div class="input-group">
+              <input type="password" name="password1" id="password1" class="form-control" placeholder="Ingresa una contraseña" required>
+              <span class="input-group-text" onclick="togglePasswordVisibility()">
+                  <i id="toggleIcon" class="fa-solid fa-eye"></i>
+              </span>
+          </div>
+      </div>
         <div class="mb-3">
             <label for="password2">Confirmar contraseña</label>
           <input type="password" name="password2" id="password2" class="form-control" placeholder="Confirma la contraseña" required>
         </div>
-
         
         {% if error %}
-
               <div class="alert alert-danger" role="alert">
                     <div class="text-center mb-2">
                         <i class="fa-solid fa-circle-exclamation"></i> {{error}}
                     </div> 
               </div>
-
         {% endif %}
-
 
         <button class="btn btn-primary">Registrar</button>
         
@@ -68,4 +60,19 @@
     </div>
   </div>
 </main>
+<script>
+  function togglePasswordVisibility() {
+      var passwordField = document.getElementById("password1");
+      var toggleIcon = document.getElementById("toggleIcon");
+      if (passwordField.type === "password") {
+          passwordField.type = "text";
+          toggleIcon.classList.remove("fa-eye");
+          toggleIcon.classList.add("fa-eye-slash");
+      } else {
+          passwordField.type = "password";
+          toggleIcon.classList.remove("fa-eye-slash");
+          toggleIcon.classList.add("fa-eye");
+      }
+  }
+</script>
 {% endblock%}
