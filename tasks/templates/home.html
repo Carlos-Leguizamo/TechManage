@@ -1,38 +1,103 @@
 {% extends 'base.html' %}
 
-<!-- Especificamos que el contenido valla dentro del block content de base.html  -->
-
 {% block content %}
 
-<main class="container py-5">
-  <section class="card" card-body>
-    <h1 class="display-0 text-center">INICIO</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere animi
-      architecto, similique dignissimos voluptates quae dolorum officia
-      recusandae distinctio doloremque ipsa odit in corporis nam perspiciatis
-      mollitia veritatis ratione dolore omnis aut minima pariatur cumque
-      provident nemo. Voluptatum aut labore molestias nobis tempora ad
-      recusandae quasi quam odio enim officiis veniam, dicta modi, dolorum
-      maiores impedit iure, sit earum. Autem porro cupiditate velit illum iste
-      asperiores placeat sint beatae debitis consectetur dicta, veniam, ut
-      deserunt consequatur recusandae ex voluptatem! Rerum accusantium illum
-      adipisci. Blanditiis maxime velit quas, commodi aspernatur ex rem eaque
-      odio modi repellat officiis ab, delectus incidunt possimus voluptate
-      magnam doloribus temporibus sequi! Porro labore eligendi saepe dolorem
-      voluptate molestiae esse nihil deleniti, inventore veniam, libero vitae
-      soluta non quos, ut iusto? Deserunt non et provident nesciunt neque
-      voluptatum ipsa nam rerum? Minima architecto eligendi voluptatem molestias
-      debitis error veniam maiores ea, reprehenderit tempora. Vitae velit
-      molestias rem repellat consectetur est alias iusto unde ut! Sunt, et vel
-      voluptatem dignissimos accusantium dolore. Reiciendis ab obcaecati
-      expedita dolores nemo, tempora quisquam aliquid illo quod libero quos
-      eaque doloremque reprehenderit, minus nostrum, ad natus non optio
-      officiis? Deleniti dolor ab temporibus ad consectetur? Veniam molestiae
-      corrupti distinctio a dolore voluptatem?
-    </p>
+<style>
+  body{
+    background-color: white;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  .card-body-custom {
+    color: linear-gradient(to right, #e8ecf1, #cfd6de);
+  }
+
+  .contenido {
+    text-align: justify;
+    width: 85%; /* Reducir un poco más el ancho del contenedor */
+    margin: 0 auto; /* Centrar el contenedor */
+  }
+
+  .titulo {
+    font-size: 2.2rem; 
+    color: #333333;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  .card-body-custom {
+    background-color: #ffffff;
+    border-radius: 1rem; /* Aumentar ligeramente la curvatura de los bordes */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Aumentar la suavidad de la sombra */
+    padding: 2rem; /* Aumentar el padding para más espacio interior */
+    border: 1px solid #dee2e6;
+    margin-top: 2.5rem;
+    margin-bottom: 2.5rem;
+  }
+
+  h3, h4 {
+    color: #0056b3;
+    margin-top: 1.5rem;
+  }
+
+  p, li {
+    font-size: 1.05rem; /* Ajuste fino al tamaño de la fuente */
+    line-height: 1.8;
+    color: #555555;
+  }
+
+  .image-container {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .image-container img {
+    border-radius: 0.5rem;
+    border: 1px solid #333333;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    max-width: 20%; /* Reducir un poco más la imagen */
+    height: auto;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .image-container img:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+  }
+
+</style>
+
+<main class="container py-3">
+  <section class="card card-body w-100 mx-auto card-body-custom">
+    <h1 class="titulo">Bienvenido a TechManage: Su Solución Integral para la Gestión de Inventario de Computadoras</h1>
+    <div class="image-container">
+      <img src="https://img-cdn.pixlr.com/image-generator/history/66c48dfd82f83b0d0a23829c/0642e8ad-361d-497f-853a-ea9d4a6aba1c/preview.webp" class="img-fluid mb-3" alt="TechManage">
+    </div>
+    <div class="contenido">
+      <p>
+        En un mundo donde la tecnología es esencial para el funcionamiento de las organizaciones, la gestión efectiva del inventario de computadoras se ha convertido en un aspecto crucial para mantener la eficiencia operativa y evitar imprevistos. TechManage está diseñado para ser la solución definitiva que su organización necesita para optimizar la administración de sus activos tecnológicos.
+      </p>
+      <h3>¿Qué es TechManage?</h3>
+      <p>
+        TechManage es un sistema centralizado de gestión de inventario de computadoras que facilita el control y la planificación de mantenimientos. Nuestro software le proporciona una plataforma integral para monitorizar el estado de sus equipos, asegurando que cada computadora esté en óptimas condiciones y lista para su uso.
+      </p>
+      <h3>¿Cómo Puede Ayudarle?</h3>
+      <ul>
+        <li>Visibilidad Clara: Obtenga una visión detallada del estado actual de su inventario, con información precisa sobre cada equipo.</li>
+        <li>Alertas Automáticas: Reciba notificaciones oportunas sobre mantenimientos pendientes y posibles problemas operativos.</li>
+        <li>Generación de Reportes: Cree reportes detallados para una mejor planificación y toma de decisiones.</li>
+      </ul>
+      <h3>¿A Quién Va Dirigido?</h3>
+      <p>TechManage está dirigido a administradores de TI, responsables de mantenimiento y cualquier profesional encargado de la gestión de equipos informáticos en organizaciones. Ya sea que esté manejando un pequeño despacho o una gran empresa, nuestro software se adapta a sus necesidades para garantizar una gestión eficiente y sin contratiempos.</p>
+      <h4>Beneficios Clave:</h4>
+      <ul>
+        <li>Reducción del riesgo de fallos operativos mediante una planificación proactiva.</li>
+        <li>Mejora en la eficiencia de la administración del inventario.</li>
+        <li>Respuesta rápida a problemas operativos y mantenimiento.</li>
+      </ul>
+    </div>
   </section>
 </main>
 
 {% endblock %}
-  

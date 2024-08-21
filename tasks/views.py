@@ -30,8 +30,9 @@ def home(request):
 
 # Logica de registro de Usuarios
 
-# @login_required
+
 def register(request):
+    request.session['validado'] = False
     if request.method == "GET":
         return render(request, "signup.html", {
             "formRegister": UserCreationForm()
@@ -124,6 +125,8 @@ def send_verification_email(request):
         return redirect('verify_token')
     return render(request, 'send_token.html')
 
+from django.utils import timezone
+
 def verify_token_view(request):
     if request.method == 'POST':
         token = request.POST.get('token')
@@ -131,11 +134,13 @@ def verify_token_view(request):
             verification_token = TokenVerification.objects.get(token=token)
             if verification_token.is_valid():
                 verification_token.delete()  # Elimina el token después de la verificación
+                request.session['validado'] = True  # Marca como validado en la sesión
                 return redirect('register')
             else:
                 return render(request, 'verify_token.html', {'error': 'Código expirado'})
         except TokenVerification.DoesNotExist:
             return render(request, 'verify_token.html', {'error': 'Código inválido'})
     return render(request, 'verify_token.html')
+
 
 
