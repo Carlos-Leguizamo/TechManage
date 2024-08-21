@@ -4,35 +4,72 @@
 
 {% block content %}
 
+<style>
+  p {
+    line-height: 1.6; /* Ajusta la altura de la línea a 1.6 veces el tamaño de la fuente */
+}
+
+.text-justify {
+  text-align: justify; /* Justifica el texto */
+}
+.titulo {
+  font-size: 3rem; /* Ajusta el tamaño según tus necesidades */
+}
+.card-body-custom, body {
+  background: linear-gradient(135deg, #e0f7fa 0%, #ffffff 100%);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem; /* Ajusta el borde redondeado según tus necesidades */
+}
+</style>
+
 <main class="container py-5">
-  <section class="card" card-body>
-    <h1 class="display-0 text-center">INICIO</h1>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere animi
-      architecto, similique dignissimos voluptates quae dolorum officia
-      recusandae distinctio doloremque ipsa odit in corporis nam perspiciatis
-      mollitia veritatis ratione dolore omnis aut minima pariatur cumque
-      provident nemo. Voluptatum aut labore molestias nobis tempora ad
-      recusandae quasi quam odio enim officiis veniam, dicta modi, dolorum
-      maiores impedit iure, sit earum. Autem porro cupiditate velit illum iste
-      asperiores placeat sint beatae debitis consectetur dicta, veniam, ut
-      deserunt consequatur recusandae ex voluptatem! Rerum accusantium illum
-      adipisci. Blanditiis maxime velit quas, commodi aspernatur ex rem eaque
-      odio modi repellat officiis ab, delectus incidunt possimus voluptate
-      magnam doloribus temporibus sequi! Porro labore eligendi saepe dolorem
-      voluptate molestiae esse nihil deleniti, inventore veniam, libero vitae
-      soluta non quos, ut iusto? Deserunt non et provident nesciunt neque
-      voluptatum ipsa nam rerum? Minima architecto eligendi voluptatem molestias
-      debitis error veniam maiores ea, reprehenderit tempora. Vitae velit
-      molestias rem repellat consectetur est alias iusto unde ut! Sunt, et vel
-      voluptatem dignissimos accusantium dolore. Reiciendis ab obcaecati
-      expedita dolores nemo, tempora quisquam aliquid illo quod libero quos
-      eaque doloremque reprehenderit, minus nostrum, ad natus non optio
-      officiis? Deleniti dolor ab temporibus ad consectetur? Veniam molestiae
-      corrupti distinctio a dolore voluptatem?
-    </p>
+  <section class="card card-body w-120 mx-auto border-dark card-body-custom ">
+    <h1 class="display-0 text-center mb-4 titulo">Bienvenido a TechManage: Su Solución Integral para la Gestión de Inventario
+      de Computadoras</h1>
+    <div class="row">
+      <div class="col-md-8 text-justify">
+        <p class="fs-5">
+          En un mundo donde la tecnología es esencial para el funcionamiento de las organizaciones, la gestión efectiva
+          del inventario de computadoras se ha convertido en un aspecto crucial para mantener la eficiencia operativa
+          y evitar imprevistos. TechManage está diseñado para ser la solución definitiva que su organización necesita
+          para optimizar la administración de sus activos tecnológicos.
+        </p>
+        <h3>¿Qué es TechManage?</h3>
+        <p class="fs-5">
+          TechManage es un sistema centralizado de gestión de inventario de computadoras que facilita el control
+          y la planificación de mantenimientos. Nuestro software le proporciona una plataforma integral para monitorizar
+          el estado de sus equipos, asegurando que cada computadora esté en óptimas condiciones y lista para su uso.
+        </p>
+        <h3>¿Cómo Puede Ayudarle?</h3>
+        <ul>
+          <li class="fs-5">Visibilidad Clara: Obtenga una visión detallada del estado actual de su inventario, con información
+            precisa sobre cada equipo.</li>
+          <li class="fs-5">Alertas Automáticas: Reciba notificaciones oportunas sobre mantenimientos pendientes y posibles problemas
+            operativos.</li>
+          <li class="fs-5">Generación de Reportes: Cree reportes detallados para una mejor planificación y toma de decisiones.</li>
+        </ul>
+        <h3>¿A Quién Va Dirigido?</h3>
+        <p class="fs-5">TechManage está dirigido a administradores de TI, responsables de mantenimiento y cualquier profesional
+          encargado de la gestión de equipos informáticos en organizaciones. Ya sea que esté manejando un pequeño
+          despacho
+          o una gran empresa, nuestro software se adapta a sus necesidades para garantizar una gestión eficiente y sin
+          contratiempos.</p>
+        <h4>Beneficios Clave:</h4>
+        <ul>
+          <li class="fs-5">Reducción del riesgo de fallos operativos mediante una planificación proactiva.</li>
+          <li class="fs-5">Mejora en la eficiencia de la administración del inventario.</li>
+          <li class="fs-5">Respuesta rápida a problemas operativos y mantenimiento.</li>
+        </ul>
+
+        </p>
+      </div>
+      <div class="col-md-4 text-end">
+        <img
+          src="https://img-cdn.pixlr.com/image-generator/history/66c48dfd82f83b0d0a23829c/0642e8ad-361d-497f-853a-ea9d4a6aba1c/preview.webp"
+          class="img-fluid mb-3" alt="Descripción de la imagen">
+      </div>
+    </div>
   </section>
 </main>
 
 {% endblock %}
-  
