@@ -18,9 +18,6 @@ VERIFICATION_TOKEN = None
 TOKEN_EXPIRATION = None
 
 
-
-
-
 # Create your views here.
 
 
@@ -30,7 +27,7 @@ def home(request):
 
 # Logica de registro de Usuarios
 
-@validacion_requerida
+@validacion_requerida 
 def register(request):
     request.session['validado'] = False
     if request.method == "GET":
