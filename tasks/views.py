@@ -11,7 +11,7 @@ from django.utils import timezone
 from django.conf import settings
 from .models import TokenVerification
 from django.contrib.auth.decorators import login_required #Seguridad de las rutas y no permitir acceso mediantre ellas si no esta logueado
-
+from .decorators import validacion_requerida
 
 # Variables globales para el token y su expiración
 VERIFICATION_TOKEN = None
@@ -30,7 +30,7 @@ def home(request):
 
 # Logica de registro de Usuarios
 
-
+@validacion_requerida
 def register(request):
     request.session['validado'] = False
     if request.method == "GET":
