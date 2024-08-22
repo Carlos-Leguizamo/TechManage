@@ -10,8 +10,8 @@ from django.shortcuts import render, redirect
 from django.utils import timezone
 from django.conf import settings
 from .models import TokenVerification
-from django.contrib.auth.decorators import login_required #Seguridad de las rutas y no permitir acceso mediantre ellas si no esta logueado
 from .decorators import validacion_requerida
+from .decorators import token_requerido
 
 # Variables globales para el token y su expiración
 VERIFICATION_TOKEN = None
@@ -29,7 +29,6 @@ def home(request):
 
 @validacion_requerida 
 def register(request):
-    request.session['validado'] = False
     if request.method == "GET":
         return render(request, "signup.html", {
             "formRegister": UserCreationForm()
@@ -56,6 +55,7 @@ def register(request):
 
                 user.save()  # Guardar usuario registrado en la BD
                 login(request, user)  # Iniciar sesión del usuario
+                request.session['validado'] = False  # Restablecer a False después del registro
                 return redirect('dashboard')
 
             except IntegrityError:
@@ -119,11 +119,13 @@ def send_verification_email(request):
             settings.DEFAULT_FROM_EMAIL,
             ['eldermoreno450@gmail.com']
         )
+        request.session['token_verificado'] = True
         return redirect('verify_token')
     return render(request, 'send_token.html')
 
-from django.utils import timezone
+# Logica para verificar token
 
+@token_requerido
 def verify_token_view(request):
     if request.method == 'POST':
         token = request.POST.get('token')
@@ -132,12 +134,14 @@ def verify_token_view(request):
             if verification_token.is_valid():
                 verification_token.delete()  # Elimina el token después de la verificación
                 request.session['validado'] = True  # Marca como validado en la sesión
+                request.session['token_verificado'] = False  # Restablecer a False después del registro
+                
                 return redirect('register')
             else:
                 return render(request, 'verify_token.html', {'error': 'Código expirado'})
         except TokenVerification.DoesNotExist:
             return render(request, 'verify_token.html', {'error': 'Código inválido'})
     return render(request, 'verify_token.html')
-
+    
 
 

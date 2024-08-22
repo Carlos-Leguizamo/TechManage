@@ -1,6 +1,7 @@
-# Ignorar el entorno virtual y todo su contenido...
+# Ignorar el entorno virtual
 env/
 
-tasks/__pycache__/
+
+
 
 

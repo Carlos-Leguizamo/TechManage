@@ -2,7 +2,7 @@
 <main class="container">
   <div class="row">
     <section class="col-md-6 col-lg-4 offset-md-3 offset-lg-4 mt-5">
-      <div class="card shadow">
+      <div class="card shadow" style="border-radius: 1rem">
         <div class="card-body">
           <h1 class="text-center mb-4">Iniciar Sesión</h1>
           <form action="/signin/" method="POST">
@@ -11,16 +11,34 @@
               <label for="username" class="form-label">
                 <i class="fa-solid fa-user me-2"></i> Usuario
               </label>
-              <input type="text" name="username" id="username" class="form-control" placeholder="Usuario" required />
+              <input
+                type="text"
+                name="username"
+                id="username"
+                class="form-control"
+                placeholder="Usuario"
+                required
+              />
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">
                 <i class="fa-solid fa-lock me-2"></i> Contraseña
               </label>
               <div class="input-group">
-                <input type="password" name="password" id="password" class="form-control" placeholder="Contraseña"
-                  minlength="4" maxlength="15" required />
-                <span class="input-group-text" onclick="togglePasswordVisibility()">
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  class="form-control"
+                  placeholder="Contraseña"
+                  minlength="4"
+                  maxlength="15"
+                  required
+                />
+                <span
+                  class="input-group-text"
+                  onclick="togglePasswordVisibility()"
+                >
                   <i id="toggleIcon" class="fa-solid fa-eye"></i>
                 </span>
               </div>
@@ -38,7 +56,9 @@
           </form>
           <div class="text-center mt-4">
             <p class="mb-0">¿No tienes una cuenta?</p>
-            <a href="{% url 'send_token' %}" class="btn btn-link">Regístrate aquí</a>
+            <a href="{% url 'send_token' %}" class="btn btn-link"
+              >Regístrate aquí</a
+            >
           </div>
         </div>
       </div>
