@@ -11,7 +11,7 @@
   .card-body-custom {
     background-color: #ffffff;
     border-radius: 1rem; /* Aumentar ligeramente la curvatura de los bordes */
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Aumentar la suavidad de la sombra */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Aumentar la suavidad de la sombra */
     padding: 2rem; /* Aumentar el padding para más espacio interior */
     border: 1px solid #dee2e6;
     margin-top: 2.5rem;
@@ -35,7 +35,6 @@
 
   .custom-container {
     max-width: 1200px;
-    padding: 2rem 1rem;
   }
 
   .custom-grid {
@@ -47,6 +46,7 @@
 
   .titulo{
     text-align: justify;
+    margin-bottom: 1rem;
   }
 
   p {
@@ -64,6 +64,82 @@
       grid-template-columns: 1fr 2fr;
     }
   }
+
+/* Estilos para la sección Tutoriales */
+
+.card-body-custom_tutoriales{
+    background-color: #ffffff;
+    border-radius: 1rem; /* Aumentar ligeramente la curvatura de los bordes */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Aumentar la suavidad de la sombra */
+    padding: 2rem; /* Aumentar el padding para más espacio interior */
+    border: 1px solid #dee2e6;
+    margin-top: 1 rem;
+    margin-bottom: 2.5rem;
+}
+
+#tutoriales {
+  background-color: #f9f9f9; /* Color de fondo */
+  padding: 40px 0; /* Espaciado vertical */
+}
+
+.section-title {
+  text-align: center; /* Centra el título */
+  margin-bottom: 40px; /* Espacio debajo del título */
+  font-size: 2 rem; /* Tamaño del texto del título */
+  font-weight: bold;
+}
+
+.tutorial-list {
+  display: flex; /* Usa flexbox para los tutoriales */
+  flex-wrap: wrap; /* Permite que los tutoriales se ajusten en múltiples líneas */
+  gap: 20px; /* Espacio entre los tutoriales */
+  justify-content: center; /* Centra los tutoriales en el contenedor */
+}
+
+.tutorial-item {
+  display: flex;
+  flex-direction: column; /* Alinea el contenido en una columna */
+  justify-content: space-between; /* Asegura que el contenido y el botón se distribuyan en el espacio disponible */
+  background-color: #dfdfdf; /* Fondo blanco para los tutoriales */
+  border-radius: 8px; /* Bordes redondeados */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  padding: 20px; /* Espaciado interno */
+  width: calc(33.333% - 20px); /* Tres tutoriales por fila con espacio */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+  height: 100%; /* Asegura que el elemento ocupe todo el espacio disponible en su contenedor */
+  min-height: 300px;
+}
+
+.tutorial-title {
+  text-align: justify;
+  font-size: 1.5em; /* Tamaño del texto del título del tutorial */
+  margin-bottom: 1rem; /* Espacio debajo del título */
+  color:black;
+}
+
+.tutorial-description {
+  margin-bottom: 20px; /* Espacio debajo de la descripción */
+}
+
+.btn {
+  display: inline-block; /* Muestra el botón como un bloque en línea */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  background-color: #248eff; /* Color de fondo del botón */
+  color: #fff; /* Color del texto del botón */
+  border: none; /* Sin borde */
+  border-radius: 4px; /* Bordes redondeados */
+  text-decoration: none; /* Quita el subrayado */
+  text-align: center; /* Centra el texto dentro del botón */
+  width: 150px; /* Ancho fijo del botón */
+  max-width: 100%; /* Asegura que el botón no se extienda más allá del contenedor */
+  box-sizing: border-box; /* Incluye padding en el ancho total */
+  align-self: center; /* Centra el botón en su contenedor */
+  margin-top: auto; /* Empuja el botón al final del contenedor si es necesario */
+}
+
+.btn:hover{
+  background-color: #0067d4;
+}
 </style>
 
 <main>
@@ -87,5 +163,51 @@
     </div>
   </div>
 </main>
+
+<section id="tutoriales">
+  <div class="container custom-container mx-auto custom-padding card-body-custom_tutoriales">
+    <h2 class="section-title">TUTORIALES</h2>
+    <div class="tutorial-list">
+
+      <div class="tutorial-item">
+        <h3 class="tutorial-title">¿Como registrarte?</h3>
+        <p class="tutorial-description">Descripción breve del primer tutorial. Aprende sobre...</p>
+        <a href="link-al-tutorial-1" class="btn">Ver Tutorial</a>
+      </div>
+
+      <div class="tutorial-item">
+        <h3 class="tutorial-title">¿Tus primeros pasos para administrar tu inventario de computadores?</h3>
+        <p class="tutorial-description">Descripción breve del segundo tutorial. Descubre cómo...</p>
+        <a href="link-al-tutorial-2" class="btn">Ver Tutorial</a>
+      </div>
+
+      <div class="tutorial-item">
+        <h3 class="tutorial-title">Tutorial 3</h3>
+        <p class="tutorial-description">Descripción breve del segundo tutorial. Descubre cómo...</p>
+        <a href="link-al-tutorial-2" class="btn">Ver Tutorial</a>
+      </div>
+
+      <div class="tutorial-item">
+        <h3 class="tutorial-title">Tutorial 4</h3>
+        <p class="tutorial-description">Descripción breve del segundo tutorial. Descubre cómo...</p>
+        <a href="link-al-tutorial-2" class="btn">Ver Tutorial</a>
+      </div>
+
+      <div class="tutorial-item">
+        <h3 class="tutorial-title">Tutorial 5</h3>
+        <p class="tutorial-description">Descripción breve del segundo tutorial. Descubre cómo...</p>
+        <a href="link-al-tutorial-2" class="btn">Ver Tutorial</a>
+      </div>
+
+      <div class="tutorial-item">
+        <h3 class="tutorial-title">Tutorial 6</h3>
+        <p class="tutorial-description">Descripción breve del segundo tutorial. Descubre cómo...</p>
+        <a href="link-al-tutorial-2" class="btn">Ver Tutorial</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
 {% endblock %}
