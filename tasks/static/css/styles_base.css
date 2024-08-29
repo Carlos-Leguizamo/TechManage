@@ -1,0 +1,45 @@
+/* Oculta la barra de desplazamiento en navegadores que soportan -webkit-scrollbar */
+::-webkit-scrollbar {
+display: none;
+}
+/* Estilo general para el cuerpo */
+body {
+background: linear-gradient(to right, #e8ecf1, #cfd6de);
+font-family: "Roboto", sans-serif;
+color: #333333; /* Color de texto por defecto */
+}
+
+/* Estilo para la barra de navegación */
+.navbar {
+background-color: #0056b3; /* Color de fondo del navbar */
+padding: 1rem; /* Ajuste de padding para un navbar más espacioso */
+}
+
+/* Estilo para el texto del logo o título en la barra de navegación */
+.navbar-brand {
+font-size: 1.5rem; /* Tamaño del texto del logo o título */
+font-weight: bold;
+color: #ffffff !important; /* Color del texto del logo */
+}
+
+/* Estilo para los enlaces de la barra de navegación */
+.navbar-nav .nav-link {
+color: #ffffff !important; /* Color de los enlaces de la barra de navegación */
+font-size: 1.1rem; /* Tamaño de las opciones de navegación */
+margin-right: 1rem; /* Espaciado entre los enlaces */
+}
+
+/* Transición suave para los enlaces en la barra de navegación */
+.navbar-nav .nav-link:hover {
+color: #cfd6de !important;
+transition: color 0.2s ease; /* Transición al pasar el ratón por encima */
+}
+
+.text-code{
+  font-weight: normal;
+  text-align: justify;
+}
+
+.fa{
+  margin-right: 10px;
+}
