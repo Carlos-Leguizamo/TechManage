@@ -40,3 +40,6 @@ transition: color 0.2s ease; /* Transición al pasar el ratón por encima */
   text-align: justify;
 }
 
+.fa{
+  margin-right: 10px;
+}

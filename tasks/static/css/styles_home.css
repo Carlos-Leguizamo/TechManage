@@ -117,7 +117,7 @@ margin-bottom: 20px; /* Espacio debajo de la descripción */
 .btn {
 display: inline-block; /* Muestra el botón como un bloque en línea */
 padding: 10px 20px; /* Espaciado interno del botón */
-background-color: #248eff; /* Color de fondo del botón */
+background-color:  #4CAF50;/* Color de fondo del botón */
 color: #fff; /* Color del texto del botón */
 border: none; /* Sin borde */
 border-radius: 4px; /* Bordes redondeados */
@@ -131,7 +131,7 @@ margin-top: auto; /* Empuja el botón al final del contenedor si es necesario */
 }
 
 .btn:hover{
-background-color: #0067d4;
+background-color: #45a049;
 }
 
 .text-footer{
