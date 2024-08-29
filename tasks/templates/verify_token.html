@@ -1,23 +1,24 @@
 {% extends 'base.html' %}
-
-
-
+{% load static %}
 {% block content %}
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificar Código</title>
+    <link rel="stylesheet" href="{% static 'css/styles_base.css' %}">
 </head>
+
 <body>
     <div class="container d-flex justify-content-center align-items-center" style="height: 80vh; ">
         <div class="card card shadow text-center p-4" style="max-width: 30rem; border-radius: 1rem;">
             <div class="card-body">
                 <h1 class="card-title">Ingresa el Código de Verificación</h1>
                 {% if error %}
-                    <p class="text-danger">{{ error }}</p>
+                <p class="text-danger">{{ error }}</p>
                 {% endif %}
                 <form method="post" action="{% url 'verify_token' %}">
                     {% csrf_token %}
@@ -30,6 +31,7 @@
         </div>
     </div>
 </body>
+
 </html>
 
 {% endblock %}
