@@ -83,11 +83,11 @@ WSGI_APPLICATION = "TechManage.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "railway",  # Nombre de tu base de datos
-        "USER": "root",  # Nombre de usuario por defecto en Laragon
-        "PASSWORD": "hMCtiEJSwEeMBYezXfFzRmQdOEQfHHMJ",  # Contraseña por defecto en Laragon es vacía
-        "HOST": "junction.proxy.rlwy.net",  # Host donde se encuentra tu servidor MySQL
-        "PORT": "20269 ",  # Puerto por defecto de MySQL
+        "NAME": "bbo5pyo7xxfq1qn9gdp2",  # Nombre de tu base de datos
+        "USER": "uwdyqin6juhupra9",  # Nombre de usuario por defecto en Laragon
+        "PASSWORD": "YL0X33z7voYqLebwFp8X",  # Contraseña por defecto en Laragon es vacía
+        "HOST": "bbo5pyo7xxfq1qn9gdp2-mysql.services.clever-cloud.com",  # Host donde se encuentra tu servidor MySQL
+        "PORT": "3306 ",  # Puerto por defecto de MySQL
     }
 }
 
