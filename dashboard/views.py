@@ -2,8 +2,8 @@ from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from sala.models import Sala
-from sala.forms import SalaForm  
+from room.models import Sala
+from room.forms import SalaForm  
 
 
 #@login_required  

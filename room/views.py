@@ -6,6 +6,8 @@ from .models import Sala
 from .forms import SalaForm  
 
 def sala(request):
+    form = None  # Inicializa la variable form
+
     if request.method == 'POST':
         if 'editar' in request.POST:
             sala_id = request.POST.get('sala_id')
