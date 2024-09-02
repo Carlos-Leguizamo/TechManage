@@ -1,15 +1,13 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .models import Sala
 from .forms import SalaForm  
 from .models import Computadores
-from .forms import ComputadoresForm
+from .forms import ComputadorForm
 
 #@login_required  
 def sala(request):
     form = None  # Inicializa la variable form
-
     if request.method == 'POST':
         if 'editar' in request.POST:
             sala_id = request.POST.get('sala_id')
@@ -39,35 +37,33 @@ def sala(request):
     salas = Sala.objects.all()
     return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
 
-def pc(request):
-    form = None  # Inicializa la variable form
 
+def pc(request):
+    return render(request, 'pc.html')
+
+#@login_required
+def pc(request):
     if request.method == 'POST':
+        print(request.POST)  # Imprime los datos del formulario para depuración
         if 'editar' in request.POST:
-            computador_id = request.POST.get('computador_id')
-            computador = get_object_or_404(Computadores, id_computador=computador_id)
-            form = ComputadoresForm(request.POST, instance=computador)
+            pc_id = request.POST.get('pc_id')
+            computador = get_object_or_404(Computadores, id_computador=pc_id)
+            form = ComputadorForm(request.POST, instance=computador)
             if form.is_valid():
                 form.save()
-                return redirect('computador')
+                return redirect('pc')
         elif 'eliminar' in request.POST:
-            computador_id = request.POST.get('computador_id')
-            computador = get_object_or_404(Computadores, id_computador=computador_id)
+            pc_id = request.POST.get('pc_id')
+            computador = get_object_or_404(Computadores, id_computador=pc_id)
             computador.delete()
-            return redirect('computador')
+            return redirect('pc')
         elif 'crear' in request.POST:
-            form = ComputadoresForm(request.POST)
+            form = ComputadorForm(request.POST)
             if form.is_valid():
                 form.save()
-                return redirect('computador')
+                return redirect('pc')
     else:
-        computador_id = request.GET.get('computador_id')
-        if computador_id:
-            sala = get_object_or_404(Computadores, id_computador=computador_id)
-            form = ComputadoresForm(instance=computador)
-        else:
-            form = ComputadoresForm()
-    
+        form = ComputadorForm()
+
     computadores = Computadores.objects.all()
-    salas = Sala.objects.all()  # Obtener todas las salas
-    return render(request, 'pc.html', {'computadores': computadores, 'form': form, 'edit': computador_id is not None, 'salas': salas})
+    return render(request, 'pc.html', {'computadores': computadores, 'form': form})

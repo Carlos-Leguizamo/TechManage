@@ -7,10 +7,7 @@ class SalaForm(forms.ModelForm):
         model = Sala
         fields = ['nombre_sala', 'capacidad', 'ubicacion', 'inventario_cantidad', 'estado']
 
-class ComputadoresForm(forms.ModelForm):
+class ComputadorForm(forms.ModelForm):
     class Meta:
         model = Computadores
-        fields = ['tipo', 'marca', 'modelo', 'estado', 'fecha_adquisicion', 'id_sala']
-        widgets = {
-            'id_sala': forms.Select(),
-        }
+        fields = ['id_sala', 'tipo', 'marca', 'modelo', 'numero_serie', 'fecha_adquisicion', 'estado']
