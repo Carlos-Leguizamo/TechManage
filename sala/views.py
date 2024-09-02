@@ -2,13 +2,8 @@ from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from sala.models import Sala
-from sala.forms import SalaForm  
-
-
-#@login_required  
-def dashboard(request):
-    return render(request, "dashboard.html")
+from .models import Sala
+from .forms import SalaForm  
 
 def sala(request):
     if request.method == 'POST':
