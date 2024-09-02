@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% load static %}
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -206,7 +204,22 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
                                         <div class="modal-body">
-                                            {{ form.as_p }}
+                                            <div class="form-group">
+                                                <label for="edit_nombre_sala">Nombre de Sala</label>
+                                                <input type="text" class="form-control" id="edit_nombre_sala" name="nombre_sala" value="{{ sala.nombre_sala }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_capacidad">Capacidad</label>
+                                                <input type="number" class="form-control" id="edit_capacidad" name="capacidad" value="{{ sala.capacidad }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_ubicacion">Ubicación</label>
+                                                <input type="text" class="form-control" id="edit_ubicacion" name="ubicacion" value="{{ sala.ubicacion }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="edit_inventario_cantidad">Cantidad de Inventario</label>
+                                                <input type="number" class="form-control" id="edit_inventario_cantidad" name="inventario_cantidad" value="{{ sala.inventario_cantidad }}" required>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -217,6 +230,10 @@
                             </div>
                         </div>
 
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No hay salas disponibles.</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -237,7 +254,22 @@
                 <form method="post" action="{% url 'sala' %}">
                     {% csrf_token %}
                     <div class="modal-body">
-                        {{ form.as_p }}
+                        <div class="form-group">
+                            <label for="nombre_sala">Nombre de Sala</label>
+                            <input type="text" class="form-control" id="nombre_sala" name="nombre_sala" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="capacidad">Capacidad</label>
+                            <input type="number" class="form-control" id="capacidad" name="capacidad" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="ubicacion">Ubicación</label>
+                            <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="inventario_cantidad">Cantidad de Inventario</label>
+                            <input type="number" class="form-control" id="inventario_cantidad" name="inventario_cantidad" required>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -247,3 +279,6 @@
             </div>
         </div>
     </div>
+</body>
+
+</html>

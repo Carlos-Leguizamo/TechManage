@@ -133,7 +133,7 @@
             border-radius: 4px;
         }
         
-        .boton_edit{
+        .boton_edit {
             padding: 4px 6px;
             border-radius: 4px;
             margin-right: 5px; 
@@ -208,7 +208,26 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="pc_id" value="{{ computador.id }}">
                                         <div class="modal-body">
-                                            {{ form.as_p }}
+                                            <div class="form-group">
+                                                <label for="nombreSala">Nombre de Sala</label>
+                                                <input type="text" class="form-control" id="nombreSala" name="nombre_sala" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="editTipo{{ computador.id }}">Nombre</label>
+                                                <input type="text" class="form-control" id="editTipo{{ computador.id }}" name="tipo" value="{{ computador.tipo }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="editMarca{{ computador.id }}">Marca</label>
+                                                <input type="text" class="form-control" id="editMarca{{ computador.id }}" name="marca" value="{{ computador.marca }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="editModelo{{ computador.id }}">Modelo</label>
+                                                <input type="text" class="form-control" id="editModelo{{ computador.id }}" name="modelo" value="{{ computador.modelo }}" required>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="editEstado{{ computador.id }}">Estado</label>
+                                                <input type="text" class="form-control" id="editEstado{{ computador.id }}" name="estado" value="{{ computador.estado }}" required>
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -226,30 +245,52 @@
         </div>
     </div>
 
- <!-- Modal para agregar nuevo Computador -->
-<div class="modal fade" id="addPcModal" tabindex="-1" role="dialog" aria-labelledby="addPcModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPcModalLabel">Agregar Nuevo Computador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+    <!-- Modal para agregar nuevo Computador -->
+    <div class="modal fade" id="addPcModal" tabindex="-1" role="dialog" aria-labelledby="addPcModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPcModalLabel">Agregar Computador</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form method="post" action="{% url 'pc' %}">
+                    {% csrf_token %}
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="nombreSala">Nombre de Sala {{ sala.nombre_sala  }} </label>
+                            <input type="text" class="form-control" id="nombreSala" name="nombre_sala" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo">Nombre</label>
+                            <input type="text" class="form-control" id="tipo" name="tipo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="marca">Marca</label>
+                            <input type="text" class="form-control" id="marca" name="marca" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="modelo">Modelo</label>
+                            <input type="text" class="form-control" id="modelo" name="modelo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="estado">Estado</label>
+                            <input type="text" class="form-control" id="estado" name="estado" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="fecha_adquisicion">Fecha de Adquisición</label>
+                            <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        <button type="submit" name="crear" class="btn btn-info">Agregar Computador</button>
+                    </div>                    
+                </form>
             </div>
-            <form method="post" action="{% url 'pc' %}">
-                {% csrf_token %}
-                <div class="modal-body">
-                    {{ form.as_p }}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" name="crear" class="btn btn-primary">Agregar Computador</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
-
 </body>
 
 </html>
