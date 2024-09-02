@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .models import Sala
 from .forms import SalaForm  
+from .models import Computadores
+from .forms import ComputadorForm
 
 #@login_required  
 def sala(request):
@@ -40,3 +42,28 @@ def sala(request):
 def pc(request):
     return render(request, 'pc.html')
 
+#@login_required
+def pc(request):
+    if request.method == 'POST':
+        if 'editar' in request.POST:
+            pc_id = request.POST.get('pc_id')
+            computador = get_object_or_404(Computadores, id_computador=pc_id)
+            form = ComputadorForm(request.POST, instance=computador)
+            if form.is_valid():
+                form.save()
+                return redirect('pc')
+        elif 'eliminar' in request.POST:
+            pc_id = request.POST.get('pc_id')
+            computador = get_object_or_404(Computadores, id_computador=pc_id)
+            computador.delete()
+            return redirect('pc')
+        elif 'crear' in request.POST:
+            form = ComputadorForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('pc')
+    else:
+        form = ComputadorForm()
+    
+    computadores = Computadores.objects.all()
+    return render(request, 'pc.html', {'computadores': computadores, 'form': form})

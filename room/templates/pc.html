@@ -1,88 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
 
 {% load static %}
-  
-<!DOCTYPE html>
-<html lang="es">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../static/css/pc.css">
-    <title>Inventario de PCs</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestión de Computadores</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+    <style>
+        /* Estilos personalizados */
+        body {
+            color: #404E67;
+            background: #F5F7FA;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .table-wrapper {
+            width: 750px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+
+        .table-title h2 {
+            margin: 6px 0 0;
+            font-size: 22px;
+        }
+
+        .table-title .add-new {
+            float: right;
+            height: 30px;
+            font-weight: bold;
+            font-size: 12px;
+            text-shadow: none;
+            min-width: 100px;
+            border-radius: 50px;
+            line-height: 13px;
+        }
+
+        .table-title .add-new i {
+            margin-right: 4px;
+        }
+
+        table.table {
+            table-layout: fixed;
+        }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table th:last-child {
+            width: 150px;
+        }
+
+        table.table td a {
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 5px;
+            min-width: 24px;
+        }
+
+        table.table td a.add {
+            color: #27C46B;
+        }
+
+        table.table td a.edit {
+            color: #FFC107;
+        }
+
+        table.table td a.delete {
+            color: #E34724;
+        }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table td a.add i {
+            font-size: 24px;
+            margin-right: -1px;
+            position: relative;
+            top: 3px;
+        }
+
+        table.table .form-control {
+            height: 32px;
+            line-height: 32px;
+            box-shadow: none;
+            border-radius: 2px;
+        }
+
+        table.table .form-control.error {
+            border-color: #f50000;
+        }
+
+        table.table td .add {
+            display: none;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #333;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .boton {
+            padding: 4px 6px;
+            border-radius: 4px;
+        }
+        
+        .boton_edit{
+            padding: 4px 6px;
+            border-radius: 4px;
+            margin-right: 5px; 
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>Inventario de PCs</h1>
-        <div class="select-container">
-            <select id="salaSelect" onchange="filterBySala()">
-                <option value="">Seleccionar Sala</option>
-                <option value="1">Sala A</option>
-                <option value="2">Sala B</option>
-                <option value="3">Sala C</option>
-            </select>
-            <button class="btn" onclick="openAddModal()">
-                <span class="icon">➕</span>
-                Añadir PC
-            </button>
-        </div>
+    <div class="container-lg">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h2>Detalles de <b>Computadores</b></h2>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addPcModal"><i class="fa fa-plus"></i> Nuevo Computador</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>id_sala</th>
+                            <th>Nombre</th>
+                            <th>Marca</th>
+                            <th>Modelo</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for computador in computadores %}
+                        <tr>
+                            <td>{{ computador.id_sala }}</td>
+                            <td>{{ computador.tipo }}</td>
+                            <td>{{ computador.marca }}</td>
+                            <td>{{ computador.modelo }}</td>
+                            <td>{{ computador.estado }}</td>
+                            <td>
+                                <!-- Botón de Editar -->
+                                <button type="button" class="btn btn-warning boton_edit" data-toggle="modal" data-target="#editPcModal{{ computador.id }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <!-- Formulario de Eliminación -->
+                                <form method="post" action="{% url 'pc' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="pc_id" value="{{ computador.id }}">
+                                    <button type="submit" name="eliminar" class="btn btn-danger boton">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                                <!-- Botón de Ver -->
+                                <a href="{% url 'sala' %}" class="btn btn-info boton">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
 
-        <table id="pcsTable" style="display: none">
-            <thead>
-                <tr>
-                    <th>Tipo</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Número de Serie</th>
-                    <th>Fecha de Adquisición</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody id="pcsTableBody">
-                <!-- Filas de PCs serán insertadas aquí -->
-            </tbody>
-        </table>
+                        <!-- Modal para editar Computador -->
+                        <div class="modal fade" id="editPcModal{{ computador.id }}" tabindex="-1" role="dialog" aria-labelledby="editPcModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editPcModalLabel">Editar Computador</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="post" action="{% url 'pc' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="pc_id" value="{{ computador.id }}">
+                                        <div class="modal-body">
+                                            {{ form.as_p }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 
-    <!-- Modal para añadir/editar -->
-    <div id="modal" class="modal" style="display: none;">
+ <!-- Modal para agregar nuevo Computador -->
+<div class="modal fade" id="addPcModal" tabindex="-1" role="dialog" aria-labelledby="addPcModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Añadir PC</h2>
-            <div class="form-group">
-                <label for="tipo">Tipo:</label>
-                <input type="text" id="tipo" />
+            <div class="modal-header">
+                <h5 class="modal-title" id="addPcModalLabel">Agregar Nuevo Computador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="marca">Marca:</label>
-                <input type="text" id="marca" />
-            </div>
-            <div class="form-group">
-                <label for="modelo">Modelo:</label>
-                <input type="text" id="modelo" />
-            </div>
-            <div class="form-group">
-                <label for="numeroSerie">Número de Serie:</label>
-                <input type="text" id="numeroSerie" />
-            </div>
-            <div class="form-group">
-                <label for="fechaAdquisicion">Fecha de Adquisición:</label>
-                <input type="date" id="fechaAdquisicion" />
-            </div>
-            <div class="form-group">
-                <label for="estado">Estado:</label>
-                <select id="estado">
-                    <option value="Operativo">Operativo</option>
-                    <option value="En mantenimiento">En mantenimiento</option>
-                    <option value="Fuera de servicio">Fuera de servicio</option>
-                    <option value="En préstamo">En préstamo</option>
-                </select>
-            </div>
-            <button id="modalActionButton" onclick="savePC()">Guardar</button>
+            <form method="post" action="{% url 'pc' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {{ form.as_p }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" name="crear" class="btn btn-primary">Agregar Computador</button>
+                </div>
+            </form>
         </div>
     </div>
-    
-    <script src="../static/js/scripts.js"></script>
+</div>
+
 </body>
+
 </html>
