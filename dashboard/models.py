@@ -23,9 +23,9 @@ class Sala(models.Model):
     descripcion = models.TextField()
     capacidad = models.IntegerField()
     ubicacion = models.CharField(max_length=45)
-    fecha_creacion = models.DateTimeField()
-    fecha_actualizacion = models.DateTimeField()
-    estado = models.BooleanField()  # Usamos BooleanField para TINYINT (0 o 1)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # Establece automáticamente la fecha de creación
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    estado = models.BooleanField(default=True)  # Valor por defecto para 'estado'
     inventario_cantidad = models.IntegerField()
 
     class Meta:

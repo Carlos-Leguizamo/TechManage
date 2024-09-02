@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Gestión de Salas</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Estilos personalizados */
+        body {
+            color: #404E67;
+            background: #F5F7FA;
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .table-wrapper {
+            width: 750px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .table-title {
+            padding-bottom: 10px;
+            margin: 0 0 10px;
+        }
+
+        .table-title h2 {
+            margin: 6px 0 0;
+            font-size: 22px;
+        }
+
+        .table-title .add-new {
+            float: right;
+            height: 30px;
+            font-weight: bold;
+            font-size: 12px;
+            text-shadow: none;
+            min-width: 100px;
+            border-radius: 50px;
+            line-height: 13px;
+        }
+
+        .table-title .add-new i {
+            margin-right: 4px;
+        }
+
+        table.table {
+            table-layout: fixed;
+        }
+
+        table.table tr th,
+        table.table tr td {
+            border-color: #e9e9e9;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table th:last-child {
+            width: 150px;
+        }
+
+        table.table td a {
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 5px;
+            min-width: 24px;
+        }
+
+        table.table td a.add {
+            color: #27C46B;
+        }
+
+        table.table td a.edit {
+            color: #FFC107;
+        }
+
+        table.table td a.delete {
+            color: #E34724;
+        }
+
+        table.table td i {
+            font-size: 19px;
+        }
+
+        table.table td a.add i {
+            font-size: 24px;
+            margin-right: -1px;
+            position: relative;
+            top: 3px;
+        }
+
+        table.table .form-control {
+            height: 32px;
+            line-height: 32px;
+            box-shadow: none;
+            border-radius: 2px;
+        }
+
+        table.table .form-control.error {
+            border-color: #f50000;
+        }
+
+        table.table td .add {
+            display: none;
+        }
+
+        .btn-warning {
+            background-color: #ffc107;
+            border-color: #ffc107;
+            color: #333;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+
+        .boton {
+            padding: 4px 6px;
+            border-radius: 4px;
+        }
+        
+        .boton_edit{
+            padding: 4px 6px;
+            border-radius: 4px;
+            margin-right: 5px; 
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container-lg">
+        <div class="table-responsive">
+            <div class="table-wrapper">
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h2>Detalles de <b>Salas</b></h2>
+                        </div>
+                        <div class="col-sm-4">
+                            <button type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addSalaModal"><i class="fa fa-plus"></i> Nueva Sala</button>
+                        </div>
+                    </div>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Capacidad</th>
+                            <th>Ubicación</th>
+                            <th>Inventario</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sala in salas %}
+                        <tr>
+                            <td>{{ sala.nombre_sala }}</td>
+                            <td>{{ sala.capacidad }}</td>
+                            <td>{{ sala.ubicacion }}</td>
+                            <td>{{ sala.inventario_cantidad }}</td>
+                            <td>
+                                <!-- Botón de Editar -->
+                                <button type="button" class="btn btn-warning boton_edit" data-toggle="modal" data-target="#editSalaModal{{ sala.id_sala }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+                                <!-- Formulario de Eliminación -->
+                                <form method="post" action="{% url 'sala' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
+                                    <button type="submit" name="eliminar" class="btn btn-danger boton">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                                <!-- Botón de Ver -->
+                                <a href="{% url 'sala' %}" class="btn btn-info boton">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- Modal para editar Sala -->
+                        <div class="modal fade" id="editSalaModal{{ sala.id_sala }}" tabindex="-1" role="dialog" aria-labelledby="editSalaModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editSalaModalLabel">Editar Sala</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <form method="post" action="{% url 'sala' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
+                                        <div class="modal-body">
+                                            {{ form.as_p }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para agregar nueva Sala -->
+    <div class="modal fade" id="addSalaModal" tabindex="-1" role="dialog" aria-labelledby="addSalaModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addSalaModalLabel">Agregar Nueva Sala</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label

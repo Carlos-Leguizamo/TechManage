@@ -25,6 +25,6 @@ urlpatterns = [
     # path("admin/", admin.site.urls),
      path("", include("tasks.urls")),  # Incluye las URLs de tasks
      path("", include("dashboard.urls")),  # Incluye las URLs de dashboard
-   
+
     
 ]
