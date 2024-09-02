@@ -10,7 +10,6 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>TechManage</title>
-    <!-- Carga los archivos estaticos del proeyecto (CSS, JS, ETC..) -->
     {% load static %}
     <link
       href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
@@ -22,6 +21,7 @@
       crossorigin="anonymous"
     ></script>
   </head>
+
   <body class="sb-nav-fixed">
     <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
       <!-- Navbar Brand-->
@@ -61,8 +61,9 @@
             role="button"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-            ><i class="fas fa-user fa-fw"></i
-          ></a>
+          >
+            <i class="fas fa-user fa-fw"></i>
+          </a>
           <ul
             class="dropdown-menu dropdown-menu-end"
             aria-labelledby="navbarDropdown"
@@ -71,7 +72,9 @@
             <li>
               <a class="dropdown-item" href="#!">Registro de Actividades</a>
             </li>
-            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
             <li>
               <a class="dropdown-item" href="{% url 'logout' %}"
                 >Cerrar Sesión</a
@@ -87,7 +90,6 @@
           <div class="sb-sidenav-menu">
             <div class="nav">
               <div class="sb-sidenav-menu-heading">Principal</div>
-
               <a
                 class="nav-link collapsed"
                 href="#"
@@ -102,7 +104,6 @@
                 Salas
                 <div class="sb-sidenav-collapse-arrow"></div>
               </a>
-
               <div class="sb-sidenav-menu-heading">Complementos</div>
               <a class="nav-link" href="#">
                 <div class="sb-nav-link-icon">
@@ -114,7 +115,6 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                 PQRS
               </a>
-
               <div class="sb-sidenav-menu-heading">PANEL ADMINISTRATIVO</div>
               <a class="nav-link" href="{% url 'adminusers' %}">
                 <div class="sb-nav-link-icon">
@@ -124,14 +124,13 @@
               </a>
             </div>
           </div>
-
           <div class="sb-sidenav-footer">
-            <div class="small">Conectado como: {{user.username}}</div>
+            <div class="small">Conectado como: {{ user.username }}</div>
           </div>
         </nav>
       </div>
-
       <div id="layoutSidenav_content">
+        {% block content %}
         <main>
           <div class="container-fluid px-4">
             <h1 class="mt-4">Dashboard</h1>
@@ -224,7 +223,7 @@
                 </div>
               </div>
             </div>
-            <div class="card mb-4">
+           <div class="card mb-4">
               <div class="card-header">
                 <i class="fas fa-table me-1"></i>
                 DataTable Example
@@ -233,9 +232,9 @@
                 <table id="datatablesSimple">
                   <thead>
                     <tr>
-                      <th>Name</th>
-                      <th>Position</th>
-                      <th>Office</th>
+                      <th>Id</th>
+                      <th>Nombres</th>
+                      <th>Apellidos</th>
                       <th>Age</th>
                       <th>Start date</th>
                       <th>Salary</th>
@@ -244,7 +243,7 @@
                   <tbody>
                     <tr>
                       <td>Tiger Nixon</td>
-                      <td>System Architect</td>
+                      <td>S ystem Architect</td>
                       <td>Edinburgh</td>
                       <td>61</td>
                       <td>2011/04/25</td>
@@ -256,26 +255,24 @@
             </div>
           </div>
         </main>
-        <footer class="py-4 bg-light mt-auto">
-          <div class="container-fluid px-4">
-            <div
-              class="d-flex align-items-center justify-content-between small"
-            >
-              <div class="text-muted">Copyright &copy; TechManage 2024</div>
-              <div>
-                <a>Politica de Privacidad</a>
-                &middot;
-                <a>Terminos &amp; condiciones</a>
-              </div>
-            </div>
+        {% endblock %}
+      
+
+    <footer class="py-4 bg-light mt-auto">
+      <div class="container-fluid px-4">
+        <div class="d-flex align-items-center justify-content-between small">
+          <div class="text-muted">Copyright &copy; TechManage 2024</div>
+          <div>
+            <a>Política de Privacidad</a> &middot;
+            <a>Términos &amp; condiciones</a>
           </div>
-        </footer>
+        </div>
       </div>
-    </div>
+    </footer>
+  </div>
+</div>
 
-    <!-- Carga los archivos estaticos del proeyecto (CSS, JS, ETC..) -->
     {% load static %}
-
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
       crossorigin="anonymous"
