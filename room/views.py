@@ -1,10 +1,10 @@
-from django.utils import timezone
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from .models import Sala
 from .forms import SalaForm  
 
+#@login_required  
 def sala(request):
     form = None  # Inicializa la variable form
 
@@ -36,3 +36,7 @@ def sala(request):
     
     salas = Sala.objects.all()
     return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
+
+def pc(request):
+    return render(request, 'pc.html')
+

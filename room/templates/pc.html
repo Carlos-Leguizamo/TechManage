@@ -1,0 +1,90 @@
+{% extends 'dashboard.html' %}
+{% load static %}
+
+{% block content %}  
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../static/css/pc.css">
+    <title>Inventario de PCs</title>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Inventario de PCs</h1>
+        <div class="select-container">
+            <select id="salaSelect" onchange="filterBySala()">
+                <option value="">Seleccionar Sala</option>
+                <option value="1">Sala A</option>
+                <option value="2">Sala B</option>
+                <option value="3">Sala C</option>
+            </select>
+            <button class="btn" onclick="openAddModal()">
+                <span class="icon">➕</span>
+                Añadir PC
+            </button>
+        </div>
+
+        <table id="pcsTable" style="display: none">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Marca</th>
+                    <th>Modelo</th>
+                    <th>Número de Serie</th>
+                    <th>Fecha de Adquisición</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="pcsTableBody">
+                <!-- Filas de PCs serán insertadas aquí -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal para añadir/editar -->
+    <div id="modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Añadir PC</h2>
+            <div class="form-group">
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" />
+            </div>
+            <div class="form-group">
+                <label for="marca">Marca:</label>
+                <input type="text" id="marca" />
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" />
+            </div>
+            <div class="form-group">
+                <label for="numeroSerie">Número de Serie:</label>
+                <input type="text" id="numeroSerie" />
+            </div>
+            <div class="form-group">
+                <label for="fechaAdquisicion">Fecha de Adquisición:</label>
+                <input type="date" id="fechaAdquisicion" />
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado:</label>
+                <select id="estado">
+                    <option value="Operativo">Operativo</option>
+                    <option value="En mantenimiento">En mantenimiento</option>
+                    <option value="Fuera de servicio">Fuera de servicio</option>
+                    <option value="En préstamo">En préstamo</option>
+                </select>
+            </div>
+            <button id="modalActionButton" onclick="savePC()">Guardar</button>
+        </div>
+    </div>
+    
+    <script src="../static/js/scripts.js"></script>
+</body>
+</html>
+ {% endblock %}
