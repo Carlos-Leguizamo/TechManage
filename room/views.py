@@ -37,14 +37,9 @@ def sala(request):
     salas = Sala.objects.all()
     return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
 
-
-def pc(request):
-    return render(request, 'pc.html')
-
 #@login_required
 def pc(request):
     if request.method == 'POST':
-        print(request.POST)  # Imprime los datos del formulario para depuración
         if 'editar' in request.POST:
             pc_id = request.POST.get('pc_id')
             computador = get_object_or_404(Computadores, id_computador=pc_id)

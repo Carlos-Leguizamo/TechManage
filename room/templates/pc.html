@@ -177,13 +177,13 @@
                             <td>{{ computador.estado }}</td>
                             <td>
                                 <!-- Botón de Editar -->
-                                <button type="button" class="btn btn-warning boton_edit" data-toggle="modal" data-target="#editPcModal{{ computador.id }}">
+                                <button type="button" class="btn btn-warning boton_edit" data-toggle="modal" data-target="#editPcModal{{ computador.id_computador }}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 <!-- Formulario de Eliminación -->
                                 <form method="post" action="{% url 'pc' %}" style="display:inline;">
                                     {% csrf_token %}
-                                    <input type="hidden" name="pc_id" value="{{ computador.id }}">
+                                    <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
                                     <button type="submit" name="eliminar" class="btn btn-danger boton">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
@@ -195,7 +195,7 @@
                             </td>
                         </tr>
   <!-- Modal para editar Computador -->
-                        <div class="modal fade" id="editPcModal{{ computador.id }}" tabindex="-1" role="dialog" aria-labelledby="editPcModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="editPcModal{{ computador.id_computador }}" tabindex="-1" role="dialog" aria-labelledby="editPcModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -206,7 +206,7 @@
                                     </div>
                                     <form method="post" action="{% url 'pc' %}">
                                         {% csrf_token %}
-                                        <input type="hidden" name="pc_id" value="{{ computador.id }}">
+                                        <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
                                         <div class="modal-body">
                                             {{ form.as_p }}
                                         </div>
