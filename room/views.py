@@ -39,6 +39,8 @@ def sala(request):
 
 #@login_required
 def pc(request):
+    pc_id = None  # Asegúrate de que `pc_id` esté definida al inicio
+
     if request.method == 'POST':
         if 'editar' in request.POST:
             pc_id = request.POST.get('pc_id')
@@ -61,4 +63,5 @@ def pc(request):
         form = ComputadorForm()
 
     computadores = Computadores.objects.all()
-    return render(request, 'pc.html', {'computadores': computadores, 'form': form})
+    salas = Sala.objects.all() 
+    return render(request, 'pc.html', {'computadores': computadores, 'salas': salas, 'form': form, 'edit': pc_id is not None})

@@ -159,10 +159,11 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>id_sala</th>
-                            <th>Nombre</th>
+                            <th>tipo</th>
                             <th>Marca</th>
                             <th>Modelo</th>
+                            <th>serie</th>
+                            <th>Fecha Adquisición</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
@@ -170,10 +171,11 @@
                     <tbody>
                         {% for computador in computadores %}
                         <tr>
-                            <td>{{ computador.id_sala }}</td>
                             <td>{{ computador.tipo }}</td>
                             <td>{{ computador.marca }}</td>
                             <td>{{ computador.modelo }}</td>
+                            <td>{{ computador.numero_serie }}</td>
+                            <td>{{ computador.fecha_adquisicion }}</td>
                             <td>{{ computador.estado }}</td>
                             <td>
                                 <!-- Botón de Editar -->
@@ -195,29 +197,66 @@
                             </td>
                         </tr>
   <!-- Modal para editar Computador -->
-                        <div class="modal fade" id="editPcModal{{ computador.id_computador }}" tabindex="-1" role="dialog" aria-labelledby="editPcModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editPcModalLabel">Editar Computador</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <form method="post" action="{% url 'pc' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
-                                        <div class="modal-body">
-                                            {{ form.as_p }}
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+  <div class="modal fade" id="editPcModal{{ computador.id_computador }}" tabindex="-1" role="dialog" aria-labelledby="editPcModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editPcModalLabel">Editar Computador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{% url 'pc' %}">
+                {% csrf_token %}
+                <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="id_sala">Sala</label>
+                        <select class="form-control" id="id_sala" name="id_sala" required>
+                            {% for sala in salas %}
+                                <option value="{{ sala.id_sala }}" {% if computador.id_sala.id_sala == sala.id_sala %}selected{% endif %}>
+                                    {{ sala.nombre_sala }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" value="{{ computador.tipo }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marca">Marca</label>
+                        <input type="text" class="form-control" id="marca" name="marca" value="{{ computador.marca }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" class="form-control" id="modelo" name="modelo" value="{{ computador.modelo }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero_serie">Número de Serie</label>
+                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" value="{{ computador.numero_serie }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_adquisicion">Fecha de Adquisición</label>
+                        <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" value="{{ computador.fecha_adquisicion }}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select class="form-control" id="estado" name="estado" required>
+                            <option value="operativo" {% if computador.estado == "Operativo" %}selected{% endif %}>Operativo</option>
+                            <option value="en reparación" {% if computador.estado == "En reparación" %}selected{% endif %}>En reparación</option>
+                            <option value="dado de baja" {% if computador.estado == "Dado de baja" %}selected{% endif %}>Dado de baja</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
                         {% endfor %}
                     </tbody>
@@ -229,16 +268,51 @@
 <div class="modal fade" id="addPcModal" tabindex="-1" role="dialog" aria-labelledby="addPcModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-  <div class="modal-header">
+            <div class="modal-header">
                 <h5 class="modal-title" id="addPcModalLabel">Agregar Nuevo Computador</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
- <form method="post" action="{% url 'pc' %}">
+            <form method="post" action="{% url 'pc' %}">
                 {% csrf_token %}
                 <div class="modal-body">
-                    {{ form.as_p }}
+                    <div class="form-group">
+                        <label for="id_sala">Sala</label>
+                        <select class="form-control" id="id_sala" name="id_sala" required>
+                            {% for sala in salas %}
+                                <option value="{{ sala.id_sala }}">{{ sala.nombre_sala }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipo">Tipo</label>
+                        <input type="text" class="form-control" id="tipo" name="tipo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="marca">Marca</label>
+                        <input type="text" class="form-control" id="marca" name="marca" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="modelo">Modelo</label>
+                        <input type="text" class="form-control" id="modelo" name="modelo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="numero_serie">Número de Serie</label>
+                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="fecha_adquisicion">Fecha de Adquisición</label>
+                        <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="estado">Estado</label>
+                        <select class="form-control" id="estado" name="estado" required>
+                            <option value="operativo">Operativo</option>
+                            <option value="en reparación">En reparación</option>
+                            <option value="dado de baja">Dado de baja</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -247,10 +321,7 @@
             </form>
         </div>
     </div>
-
 </div>
-
 </body>
-
 </html>
 {% endblock %}

@@ -29,7 +29,7 @@ class Computadores(models.Model):
     marca = models.CharField(max_length=45)
     modelo = models.CharField(max_length=45)
     numero_serie = models.CharField(max_length=45)
-    fecha_adquisicion = models.DateTimeField()
+    fecha_adquisicion = models.DateField()
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES)
     id_sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
 
