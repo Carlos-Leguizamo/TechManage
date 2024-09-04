@@ -134,7 +134,7 @@
             border-radius: 4px;
         }
         
-        .boton_edit{
+        .boton_edit {
             padding: 4px 6px;
             border-radius: 4px;
             margin-right: 5px; 
@@ -187,7 +187,7 @@
                                     </button>
                                 </form>
                                 <!-- Botón de Ver -->
-                                <a href="{% url 'pc' %}" class="btn btn-info boton">
+                                <a href="{% url 'pc' sala.id_sala %}" class="btn btn-info boton">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
                             </td>
@@ -276,7 +276,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                        <button type="submit" name="crear" class="btn btn-primary">Agregar Sala</button>
+                        <button type="submit" name="agregar" class="btn btn-info">Agregar Sala</button>
                     </div>
                 </form>
             </div>

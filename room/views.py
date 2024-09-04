@@ -1,13 +1,9 @@
-from django.shortcuts import render, redirect
-from django.shortcuts import get_object_or_404
-from .models import Sala
-from .forms import SalaForm  
-from .models import Computadores
-from .forms import ComputadorForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Sala, Computadores
+from .forms import SalaForm, ComputadorForm
 
-#@login_required  
 def sala(request):
-    form = None  # Inicializa la variable form
+    form = None
     if request.method == 'POST':
         if 'editar' in request.POST:
             sala_id = request.POST.get('sala_id')
@@ -37,9 +33,10 @@ def sala(request):
     salas = Sala.objects.all()
     return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
 
-#@login_required
-def pc(request):
-    pc_id = None  # Asegúrate de que `pc_id` esté definida al inicio
+def pc(request, sala_id):
+    sala = get_object_or_404(Sala, id_sala=sala_id)
+    computadores = Computadores.objects.filter(id_sala=sala)
+    form = None
 
     if request.method == 'POST':
         if 'editar' in request.POST:
@@ -48,20 +45,19 @@ def pc(request):
             form = ComputadorForm(request.POST, instance=computador)
             if form.is_valid():
                 form.save()
-                return redirect('pc')
+                return redirect('pc', sala_id=sala_id)
         elif 'eliminar' in request.POST:
             pc_id = request.POST.get('pc_id')
             computador = get_object_or_404(Computadores, id_computador=pc_id)
             computador.delete()
-            return redirect('pc')
+            return redirect('pc', sala_id=sala_id)
         elif 'crear' in request.POST:
             form = ComputadorForm(request.POST)
             if form.is_valid():
+                form.instance.id_sala = sala
                 form.save()
-                return redirect('pc')
+                return redirect('pc', sala_id=sala_id)
     else:
         form = ComputadorForm()
 
-    computadores = Computadores.objects.all()
-    salas = Sala.objects.all() 
-    return render(request, 'pc.html', {'computadores': computadores, 'salas': salas, 'form': form, 'edit': pc_id is not None})
+    return render(request, 'pc.html', {'sala': sala, 'computadores': computadores, 'form': form})

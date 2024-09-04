@@ -183,7 +183,7 @@
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 <!-- Formulario de Eliminación -->
-                                <form method="post" action="{% url 'pc' %}" style="display:inline;">
+                                <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
                                     <button type="submit" name="eliminar" class="btn btn-danger boton">
@@ -206,20 +206,11 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{% url 'pc' %}">
+            <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
                 {% csrf_token %}
+                <input type="hidden" name="id_sala" value="{{ sala.id_sala }}">
                 <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="id_sala">Sala</label>
-                        <select class="form-control" id="id_sala" name="id_sala" required>
-                            {% for sala in salas %}
-                                <option value="{{ sala.id_sala }}" {% if computador.id_sala.id_sala == sala.id_sala %}selected{% endif %}>
-                                    {{ sala.nombre_sala }}
-                                </option>
-                            {% endfor %}
-                        </select>
-                    </div>
                     <div class="form-group">
                         <label for="tipo">Tipo</label>
                         <input type="text" class="form-control" id="tipo" name="tipo" value="{{ computador.tipo }}" required>
@@ -274,17 +265,10 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{% url 'pc' %}">
+            <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="id_sala">Sala</label>
-                        <select class="form-control" id="id_sala" name="id_sala" required>
-                            {% for sala in salas %}
-                                <option value="{{ sala.id_sala }}">{{ sala.nombre_sala }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
+                    <input type="hidden" name="id_sala" value="{{ sala.id_sala }}">
                     <div class="form-group">
                         <label for="tipo">Tipo</label>
                         <input type="text" class="form-control" id="tipo" name="tipo" required>
