@@ -4,6 +4,7 @@ from .forms import SalaForm, ComputadorForm
 
 def sala(request):
     form = None
+    sala_id = None
     if request.method == 'POST':
         if 'editar' in request.POST:
             sala_id = request.POST.get('sala_id')
@@ -31,6 +32,8 @@ def sala(request):
             form = SalaForm()
     
     salas = Sala.objects.all()
+    for sala in salas:
+        sala.inventario_cantidad = Computadores.objects.filter(id_sala=sala).count()
     return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
 
 def pc(request, sala_id):
@@ -52,6 +55,11 @@ def pc(request, sala_id):
             computador.delete()
             return redirect('pc', sala_id=sala_id)
         elif 'crear' in request.POST:
+            if computadores.count() >= sala.capacidad:
+                return render(request, 'pc.html', {
+                    'sala': sala, 'computadores': computadores, 'form': form, 
+                    'error_message': 'No se pueden agregar más computadores. Se ha alcanzado la capacidad máxima de la sala.'
+                })
             form = ComputadorForm(request.POST)
             if form.is_valid():
                 form.instance.id_sala = sala
@@ -60,4 +68,4 @@ def pc(request, sala_id):
     else:
         form = ComputadorForm()
 
-    return render(request, 'pc.html', {'sala': sala, 'computadores': computadores, 'form': form})
+    return render(request, 'pc.html', {'sala': sala, 'computadores': computadores, 'form': form, 'error_message': None})

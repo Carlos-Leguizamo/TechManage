@@ -12,7 +12,7 @@ class Sala(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)  # Establece automáticamente la fecha de creación
     fecha_actualizacion = models.DateTimeField(auto_now=True)
     estado = models.BooleanField(default=True)  # Valor por defecto para 'estado'
-    inventario_cantidad = models.IntegerField()
+    inventario_cantidad = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'Sala'
