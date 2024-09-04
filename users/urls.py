@@ -3,12 +3,10 @@
 from django.urls import path
 from . import views
 
-
 urlpatterns = [
     path("admin-user/", views.adminusers, name='adminusers'),
-    # path('user_management/', views.user_management, name='user_management'),  # Añade esta línea
-    path('delete_user/<int:user_id>/', views.confirm_delete_user, name='confirm_delete_user'),
-#  path('confirm-delete/', views.confirm_delete_user, name='confirm_delete_user'),
-   
-    
+ # urls.py
+    path('delete_user/<str:token_verification>/', views.delete_user, name='delete_user'),
+    path('confirm_delete_user/<str:token_verification>/', views.confirm_delete_user, name='confirm_delete_user'),
+
 ]
