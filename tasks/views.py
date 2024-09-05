@@ -29,7 +29,7 @@ def home(request):
 
 # Logica de registro de Usuarios
 
-@validacion_requerida 
+# @validacion_requerida 
 def register(request):
     if request.method == "GET":
         return render(request, "signup.html", {
