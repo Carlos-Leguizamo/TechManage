@@ -34,6 +34,7 @@ def sala(request):
     salas = Sala.objects.all()
     for sala in salas:
         sala.inventario_cantidad = Computadores.objects.filter(id_sala=sala).count()
+        sala.save()
     return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
 
 def pc(request, sala_id):
@@ -53,6 +54,8 @@ def pc(request, sala_id):
             pc_id = request.POST.get('pc_id')
             computador = get_object_or_404(Computadores, id_computador=pc_id)
             computador.delete()
+            sala.inventario_cantidad = Computadores.objects.filter(id_sala=sala).count()
+            sala.save()
             return redirect('pc', sala_id=sala_id)
         elif 'crear' in request.POST:
             if computadores.count() >= sala.capacidad:
@@ -64,6 +67,8 @@ def pc(request, sala_id):
             if form.is_valid():
                 form.instance.id_sala = sala
                 form.save()
+                sala.inventario_cantidad = Computadores.objects.filter(id_sala=sala).count()
+                sala.save()
                 return redirect('pc', sala_id=sala_id)
     else:
         form = ComputadorForm()
