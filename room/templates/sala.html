@@ -1,110 +1,95 @@
-{% extends "dashboard.html" %} 
-{% load static %}
+{% extends "dashboard.html" %}
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Gestión de Salas</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</head>
+<div class="container-lg mt-4">
+    <!-- Card con tabla de gestión de salas -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Gestión de <b>Salas</b></h5>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addSalaModal">
+                <i class="fa fa-plus"></i> Nueva Sala
+            </button>
+        </div>
+        <div class="card-body">
+            <!-- Mensaje de error -->
+            {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+            {% endif %}
 
-<body>
-    <div class="container-lg">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-8">
-                            <h2>Gestión de <b>Salas</b></h2>
-                        </div>
-                        <div class="col-sm-4 text-right">
-                            <button type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addSalaModal"><i class="fa fa-plus"></i> Nueva Sala</button>
-                        </div>
-                    </div>
-                </div>
-                <table class="table table-bordered">
+            <!-- Tabla de salas -->
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Capacidad</th>
-                            <th>Ubicación</th>
-                            <th>Inventario</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Capacidad</th>
+                            <th class="text-center">Ubicación</th>
+                            <th class="text-center">Inventario</th>
+                            <th class="text-center" style="width:152px;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for sala in salas %}
                         <tr>
-                            <td>{{ sala.nombre_sala }}</td>
-                            <td>{{ sala.capacidad }}</td>
-                            <td>{{ sala.ubicacion }}</td>
-                            <td>{{ sala.inventario_cantidad }}</td>
-                            <td>
+                            <td class="text-center">{{ sala.nombre_sala }}</td>
+                            <td class="text-center">{{ sala.capacidad }}</td>
+                            <td class="text-center">{{ sala.ubicacion }}</td>
+                            <td class="text-center">{{ sala.inventario_cantidad }}</td>
+                            <td class="text-center">
                                 <!-- Botón de Editar -->
-                                <button type="button" class="btn btn-warning boton_edit" data-toggle="modal" data-target="#editSalaModal{{ sala.id_sala }}">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editSalaModal{{ sala.id_sala }}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 <!-- Formulario de Eliminación -->
                                 <form method="post" action="{% url 'sala' %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
-                                    <button type="submit" name="eliminar" class="btn btn-danger boton">
+                                    <button type="submit" name="eliminar" class="btn btn-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
                                 <!-- Botón de Ver -->
-                                <a href="{% url 'pc' sala.id_sala %}" class="btn btn-info boton">
+                                <a href="{% url 'pc' sala.id_sala %}" class="btn btn-info">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
                             </td>
                         </tr>
 
                         <!-- Modal para editar Sala -->
-                        <div class="modal fade" id="editSalaModal{{ sala.id_sala }}" tabindex="-1" role="dialog" aria-labelledby="editSalaModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
+                        <div class="modal fade" id="editSalaModal{{ sala.id_sala }}" tabindex="-1" aria-labelledby="editSalaModalLabel{{ sala.id_sala }}" aria-hidden="true">
+                            <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="editSalaModalLabel">Editar Sala</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
+                                        <h5 class="modal-title" id="editSalaModalLabel{{ sala.id_sala }}">Editar Sala</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <form method="post" action="{% url 'sala' %}">
                                         {% csrf_token %}
                                         <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
                                         <div class="modal-body">
-                                            <div class="form-group">
-                                                <label for="edit_nombre_sala">Nombre de Sala</label>
+                                            <div class="mb-3">
+                                                <label for="edit_nombre_sala" class="form-label">Nombre de Sala</label>
                                                 <input type="text" class="form-control" id="edit_nombre_sala" name="nombre_sala" value="{{ sala.nombre_sala }}" required>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="edit_capacidad">Capacidad</label>
+                                            <div class="mb-3">
+                                                <label for="edit_capacidad" class="form-label">Capacidad</label>
                                                 <input type="number" class="form-control" id="edit_capacidad" name="capacidad" value="{{ sala.capacidad }}" required>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="edit_ubicacion">Ubicación</label>
+                                            <div class="mb-3">
+                                                <label for="edit_ubicacion" class="form-label">Ubicación</label>
                                                 <input type="text" class="form-control" id="edit_ubicacion" name="ubicacion" value="{{ sala.ubicacion }}" required>
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                                             <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
                                         </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
-
                         {% empty %}
                         <tr>
                             <td colspan="5" class="text-center">No hay salas disponibles.</td>
@@ -112,75 +97,80 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
 
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
+            <!-- Paginación con Bootstrap -->
+            <nav aria-label="Page navigation " class="mt-4">
+                <ul class="pagination justify-content-center mb-0">
                     {% if salas.has_previous %}
                     <li class="page-item">
-                        <a class="page-link" href="?page=1" aria-label="First">
-                            <span aria-hidden="true">&laquo;&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ salas.previous_page_number }}" aria-label="Previous">
+                        <a class="page-link" href="?page={{ salas.previous_page_number }}" aria-label="Anterior">
                             <span aria-hidden="true">&laquo;</span>
                         </a>
                     </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </span>
+                    </li>
                     {% endif %}
                     {% for num in salas.paginator.page_range %}
-                        {% if num == salas.number %}
-                        <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}<span class="sr-only">(current)</span></span></li>
-                        {% else %}
-                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-                        {% endif %}
+                    {% if salas.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > salas.number|add:'-3' and num < salas.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
                     {% endfor %}
                     {% if salas.has_next %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ salas.next_page_number }}" aria-label="Next">
+                        <a class="page-link" href="?page={{ salas.next_page_number }}" aria-label="Siguiente">
                             <span aria-hidden="true">&raquo;</span>
                         </a>
                     </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ salas.paginator.num_pages }}" aria-label="Last">
-                            <span aria-hidden="true">&raquo;&raquo;</span>
-                        </a>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </span>
                     </li>
                     {% endif %}
                 </ul>
             </nav>
-
-            </div>
         </div>
     </div>
+</div>
 
-   <!-- Modal para agregar Sala -->
-<div class="modal fade" id="addSalaModal" tabindex="-1" role="dialog" aria-labelledby="addSalaModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<!-- Modal para agregar Sala -->
+<div class="modal fade" id="addSalaModal" tabindex="-1" aria-labelledby="addSalaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addSalaModalLabel">Agregar Sala</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form method="post" action="{% url 'sala' %}">
                 {% csrf_token %}
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="nombre_sala">Nombre de Sala</label>
+                    <div class="mb-3">
+                        <label for="nombre_sala" class="form-label">Nombre de Sala</label>
                         <input type="text" class="form-control" id="nombre_sala" name="nombre_sala" required>
                     </div>
-                    <div class="form-group">
-                        <label for="capacidad">Capacidad</label>
+                    <div class="mb-3">
+                        <label for="capacidad" class="form-label">Capacidad</label>
                         <input type="number" class="form-control" id="capacidad" name="capacidad" required>
                     </div>
-                    <div class="form-group">
-                        <label for="ubicacion">Ubicación</label>
+                    <div class="mb-3">
+                        <label for="ubicacion" class="form-label">Ubicación</label>
                         <input type="text" class="form-control" id="ubicacion" name="ubicacion" required>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
                     <button type="submit" name="crear" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
@@ -188,7 +178,4 @@
     </div>
 </div>
 
-</body>
-
-</html>
 {% endblock %}

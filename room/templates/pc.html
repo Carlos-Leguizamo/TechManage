@@ -1,36 +1,21 @@
-{% extends "dashboard.html" %} 
-{% load static %}
+{% extends "dashboard.html" %}
+<!-- {% load static %} -->
 {% block content %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
- <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Gestión de Computadores</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round|Open+Sans">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-</head>
-
-<body>
-<div class="container-lg">
+    <div class="container-lg mt-4">
         <div class="table-responsive">
             <div class="table-wrapper">
-                <div class="table-title">
+                <div class="table-title mb-4">
                     <div class="row">
                         <div class="col-sm-8">
                             <h2>Detalles de la sala: <b>{{ sala.nombre_sala }}</b></h2>
                             <p>Capacidad de la sala: {{ sala.capacidad }}</p>
                         </div>
-                        <div class="col-sm-4 text-right">
-                            <button type="button" class="btn btn-info add-new" data-toggle="modal" data-target="#addPcModal"><i class="fa fa-plus"></i> Nuevo Computador</button>
+                        <div class="col-sm-4 text-end">
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal"
+                                data-bs-target="#addPcModal"><i class="fa fa-plus"></i> Nuevo Computador</button>
                         </div>
+                        
                     </div>
                 </div>
                 {% if error_message %}
@@ -61,170 +46,192 @@
                             <td>{{ computador.estado }}</td>
                             <td>
                                 <!-- Botón de Editar -->
-                                <button type="button" class="btn btn-warning boton_edit" data-toggle="modal" data-target="#editPcModal{{ computador.id_computador }}">
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#editPcModal{{ computador.id_computador }}">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </button>
                                 <!-- Formulario de Eliminación -->
                                 <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}" style="display:inline;">
                                     {% csrf_token %}
                                     <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
-                                    <button type="submit" name="eliminar" class="btn btn-danger boton">
+                                    <button type="submit" name="eliminar" class="btn btn-danger">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </form>
                                 <!-- Botón de Ver -->
-                                <a href="{% url 'sala' %}" class="btn btn-info boton">
+                                <a href="{% url 'sala' %}" class="btn btn-info">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
                             </td>
                         </tr>
-  <!-- Modal para editar Computador -->
-  <div class="modal fade" id="editPcModal{{ computador.id_computador }}" tabindex="-1" role="dialog" aria-labelledby="editPcModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editPcModalLabel">Editar Computador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
-                {% csrf_token %}
-                <input type="hidden" name="id_sala" value="{{ sala.id_sala }}">
-                <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="tipo">Tipo</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo" value="{{ computador.tipo }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="marca">Marca</label>
-                        <input type="text" class="form-control" id="marca" name="marca" value="{{ computador.marca }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="modelo">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo" value="{{ computador.modelo }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="numero_serie">Número de Serie</label>
-                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" value="{{ computador.numero_serie }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha_adquisicion">Fecha de Adquisición</label>
-                        <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" value="{{ computador.fecha_adquisicion }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="estado">Estado</label>
-                        <select class="form-control" id="estado" name="estado" required>
-                            <option value="operativo" {% if computador.estado == "Operativo" %}selected{% endif %}>Operativo</option>
-                            <option value="en reparación" {% if computador.estado == "En reparación" %}selected{% endif %}>En reparación</option>
-                            <option value="dado de baja" {% if computador.estado == "Dado de baja" %}selected{% endif %}>Dado de baja</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+                        <!-- Modal para editar Computador -->
+                        <div class="modal fade" id="editPcModal{{ computador.id_computador }}" tabindex="-1"
+                            aria-labelledby="editPcModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editPcModalLabel">Editar Computador</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="id_sala" value="{{ sala.id_sala }}">
+                                        <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="tipo" class="form-label">Tipo</label>
+                                                <input type="text" class="form-control" id="tipo" name="tipo"
+                                                    value="{{ computador.tipo }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="marca" class="form-label">Marca</label>
+                                                <input type="text" class="form-control" id="marca" name="marca"
+                                                    value="{{ computador.marca }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="modelo" class="form-label">Modelo</label>
+                                                <input type="text" class="form-control" id="modelo" name="modelo"
+                                                    value="{{ computador.modelo }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="numero_serie" class="form-label">Número de Serie</label>
+                                                <input type="text" class="form-control" id="numero_serie"
+                                                    name="numero_serie" value="{{ computador.numero_serie }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="fecha_adquisicion" class="form-label">Fecha de Adquisición</label>
+                                                <input type="date" class="form-control" id="fecha_adquisicion"
+                                                    name="fecha_adquisicion" value="{{ computador.fecha_adquisicion }}"
+                                                    required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="estado" class="form-label">Estado</label>
+                                                <select class="form-select" id="estado" name="estado" required>
+                                                    <option value="operativo"
+                                                        {% if computador.estado == "Operativo" %}selected{% endif %}>
+                                                        Operativo</option>
+                                                    <option value="en reparación"
+                                                        {% if computador.estado == "En reparación" %}selected{% endif %}>
+                                                        En reparación</option>
+                                                    <option value="dado de baja"
+                                                        {% if computador.estado == "Dado de baja" %}selected{% endif %}>
+                                                        Dado de baja</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         {% endfor %}
                     </tbody>
                 </table>
-                
-                     <!-- Paginación -->
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    {% if computadores.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page=1" aria-label="First">
-                            <span aria-hidden="true">&laquo;&laquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ computadores.previous_page_number }}" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% for num in computadores.paginator.page_range %}
-                        {% if num == computadores.number %}
-                        <li class="page-item active" aria-current="page"><span class="page-link">{{ num }}<span class="sr-only">(current)</span></span></li>
+
+                <!-- Paginacion con bootstrap -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        {% if computadores.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ computadores.previous_page_number }}"
+                                aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
                         {% else %}
-                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="Anterior">
+                                <span aria-hidden="true">&laquo;</span>
+                            </span>
+                        </li>
                         {% endif %}
-                    {% endfor %}
-                    {% if computadores.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ computadores.next_page_number }}" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ computadores.paginator.num_pages }}" aria-label="Last">
-                            <span aria-hidden="true">&raquo;&raquo;</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </nav>
+                        {% for num in computadores.paginator.page_range %}
+                        {% if computadores.number == num %}
+                        <li class="page-item active" aria-current="page">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                        {% elif num > computadores.number|add:'-3' and num < computadores.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if computadores.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ computadores.next_page_number }}"
+                                aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% else %}
+                        <li class="page-item disabled">
+                            <span class="page-link" aria-label="Siguiente">
+                                <span aria-hidden="true">&raquo;</span>
+                            </span>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
 
             </div>
         </div>
     </div>
- <!-- Modal para agregar nuevo Computador -->
-<div class="modal fade" id="addPcModal" tabindex="-1" role="dialog" aria-labelledby="addPcModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addPcModalLabel">Agregar Nuevo Computador</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
-                {% csrf_token %}
-                <div class="modal-body">
+
+    <!-- Modal para agregar nuevo Computador -->
+    <div class="modal fade" id="addPcModal" tabindex="-1" aria-labelledby="addPcModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addPcModalLabel">Agregar Nuevo Computador</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
+                    {% csrf_token %}
                     <input type="hidden" name="id_sala" value="{{ sala.id_sala }}">
-                    <div class="form-group">
-                        <label for="tipo">Tipo</label>
-                        <input type="text" class="form-control" id="tipo" name="tipo" required>
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="tipo" class="form-label">Tipo</label>
+                            <input type="text" class="form-control" id="tipo" name="tipo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="marca" class="form-label">Marca</label>
+                            <input type="text" class="form-control" id="marca" name="marca" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="modelo" class="form-label">Modelo</label>
+                            <input type="text" class="form-control" id="modelo" name="modelo" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="numero_serie" class="form-label">Número de Serie</label>
+                            <input type="text" class="form-control" id="numero_serie" name="numero_serie" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="fecha_adquisicion" class="form-label">Fecha de Adquisición</label>
+                            <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="estado" class="form-label">Estado</label>
+                            <select class="form-select" id="estado" name="estado" required>
+                                <option value="operativo">Operativo</option>
+                                <option value="en reparación">En reparación</option>
+                                <option value="dado de baja">Dado de baja</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="marca">Marca</label>
-                        <input type="text" class="form-control" id="marca" name="marca" required>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                        <button type="submit" name="agregar" class="btn btn-info">Agregar</button>
                     </div>
-                    <div class="form-group">
-                        <label for="modelo">Modelo</label>
-                        <input type="text" class="form-control" id="modelo" name="modelo" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="numero_serie">Número de Serie</label>
-                        <input type="text" class="form-control" id="numero_serie" name="numero_serie" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="fecha_adquisicion">Fecha de Adquisición</label>
-                        <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="estado">Estado</label>
-                        <select class="form-control" id="estado" name="estado" required>
-                            <option value="operativo">Operativo</option>
-                            <option value="en reparación">En reparación</option>
-                            <option value="dado de baja">Dado de baja</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                    <button type="submit" name="crear" class="btn btn-primary">Agregar Computador</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
-</body>
-</html>
+
+
+
+
 {% endblock %}
