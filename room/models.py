@@ -1,21 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-class PQRS(models.Model):
-    ESTADO_CHOICES = [
-        ('pendiente', 'Pendiente'),
-        ('en_proceso', 'En proceso'),
-        ('resuelto', 'Resuelto'),
-    ]
-
-    id_pqrs = models.AutoField(primary_key=True)
-    fecha_creacion = models.DateTimeField()
-    descripcion = models.TextField()
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES)
-    id = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'PQRS'
+# Create your models here.
 
 class Sala(models.Model):
     id_sala = models.AutoField(primary_key=True)
@@ -23,10 +9,10 @@ class Sala(models.Model):
     descripcion = models.TextField()
     capacidad = models.IntegerField()
     ubicacion = models.CharField(max_length=45)
-    fecha_creacion = models.DateTimeField()
-    fecha_actualizacion = models.DateTimeField()
-    estado = models.BooleanField()  # Usamos BooleanField para TINYINT (0 o 1)
-    inventario_cantidad = models.IntegerField()
+    fecha_creacion = models.DateTimeField(auto_now_add=True)  # Establece automáticamente la fecha de creación
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
+    estado = models.BooleanField(default=True)  # Valor por defecto para 'estado'
+    inventario_cantidad = models.IntegerField(default=0)
 
     class Meta:
         db_table = 'Sala'
@@ -43,7 +29,7 @@ class Computadores(models.Model):
     marca = models.CharField(max_length=45)
     modelo = models.CharField(max_length=45)
     numero_serie = models.CharField(max_length=45)
-    fecha_adquisicion = models.DateTimeField()
+    fecha_adquisicion = models.DateField()
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES)
     id_sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
 
@@ -74,16 +60,6 @@ class Perifericos(models.Model):
 
     class Meta:
         db_table = 'Perifericos'
-
-class Reportes(models.Model):
-    id_reportes = models.AutoField(primary_key=True)
-    nombre_reporte = models.CharField(max_length=45)
-    fecha = models.DateTimeField()
-    descripcion = models.TextField()
-    id = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table = 'Reportes'
 
 class Mantenimiento(models.Model):
     TIPO_MANTENIMIENTO_CHOICES = [
