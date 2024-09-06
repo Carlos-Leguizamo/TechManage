@@ -52,7 +52,7 @@ def sala(request):
 def pc(request, sala_id):
     sala = get_object_or_404(Sala, id_sala=sala_id)
     computadores = Computadores.objects.filter(id_sala=sala)
-    
+
     paginator = Paginator(computadores, 4) 
     page = request.GET.get('page')
     try:
@@ -82,7 +82,7 @@ def pc(request, sala_id):
         elif 'crear' in request.POST:
             if computadores.count() >= sala.capacidad:
                 return render(request, 'pc.html', {
-                    'sala': sala, 'computadores': computadores, 'form': form, 
+                    'sala': sala, 'computadores': computadores_page, 'form': form, 
                     'error_message': 'No se pueden agregar más computadores. Se ha alcanzado la capacidad máxima de la sala.'
                 })
             form = ComputadorForm(request.POST)
