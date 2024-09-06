@@ -12,6 +12,8 @@ from django.conf import settings
 from .models import TokenVerification
 from .decorators import validacion_requerida
 from .decorators import token_requerido
+from users.models import UserProfile
+import uuid
 
 # Variables globales para el token y su expiración
 VERIFICATION_TOKEN = None
@@ -27,7 +29,7 @@ def home(request):
 
 # Logica de registro de Usuarios
 
-@validacion_requerida 
+# @validacion_requerida 
 def register(request):
     if request.method == "GET":
         return render(request, "signup.html", {
@@ -52,10 +54,14 @@ def register(request):
                     email=request.POST["email"],
                     password=request.POST["password1"],
                 )
+                
+                # Crear perfil de usuario y asignar el token
+                # UserProfile.objects.create(user=user, token_verification=str(uuid.uuid4()))
 
                 user.save()  # Guardar usuario registrado en la BD
                 login(request, user)  # Iniciar sesión del usuario
-                request.session['validado'] = False  # Restablecer a False después del registro
+                # Comentando la línea para depuración
+                # request.session['validado'] = False
                 return redirect('dashboard')
 
             except IntegrityError:
@@ -68,7 +74,6 @@ def register(request):
             "formRegister": UserCreationForm(),
             'error': 'Las contraseñas no coinciden'
         })
-    
 
 # Logica de Logout o cerrrar sesion 
 def signout (request):

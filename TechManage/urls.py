@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 from tasks import views
 from dashboard import views
+from users import views
 
 
 urlpatterns = [
@@ -26,5 +27,8 @@ urlpatterns = [
      path("", include("tasks.urls")),  # Incluye las URLs de tasks
      path("", include("dashboard.urls")),  # Incluye las URLs de dashboard
      path("", include("room.urls")),  # Incluye las URLs de sala
+     path("", include("users.urls")),  # Incluye las URLs de users
+   
+
     
 ]

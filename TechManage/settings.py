@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     "tasks",
     "dashboard",
     "room",
+    "users",
+    
     
     
     
