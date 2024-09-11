@@ -16,13 +16,3 @@ class PQRS(models.Model):
 
     class Meta:
         db_table = 'PQRS'
-
-class Reportes(models.Model):
-    id_reportes = models.AutoField(primary_key=True)
-    nombre_reporte = models.CharField(max_length=45)
-    fecha = models.DateTimeField()
-    descripcion = models.TextField()
-    id = models.ForeignKey(User, on_delete=models.CASCADE)
-
-    class Meta:
-        db_table='Reportes'
