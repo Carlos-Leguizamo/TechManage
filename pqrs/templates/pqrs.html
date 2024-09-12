@@ -1,0 +1,54 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container my-5">
+    <!-- Mostrar mensajes de éxito o error -->
+    {% if messages %}
+        <div class="alert-container">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-title text-center mb-4">Crear solicitud PQRS</h2>
+
+                    <!-- Formulario para seleccionar el tipo de solicitud y llenar detalles -->
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <!-- Opciones de Tipo de Solicitud -->
+                        <div class="mb-4">
+                            <div class="form-group">
+                                <label for="tipo" class="form-label">Tipo de Solicitud</label>
+                                <select id="tipo" name="tipo" class="form-select" required>
+                                    <option value="" disabled selected>Seleccione una opción</option>
+                                    {% for tipo_value, tipo_label in TIPO_CHOICES  %}
+                                    <option value="{{ tipo_value }}">{{ tipo_label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Campo de Descripción -->
+                        
+                        <div class="mb-3">
+                             <label for="descripcion" class="form-label">Descripción</label>
+                             <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Escriba aquí los detalles de su solicitud..." required minlength="30" style="resize: none; height: 200px;"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">Enviar Solicitud</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

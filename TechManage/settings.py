@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "dashboard",
     "room",
     "users",
+    "pqrs",
     
     
     
