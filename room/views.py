@@ -71,15 +71,18 @@ def pc(request, sala_id):
             form = ComputadorForm(request.POST, instance=computador)
             if form.is_valid():
                 form.save()
-                return redirect('pc', sala_id=sala_id)
+                return redirect('pc', sala_id=sala_id)  # Redirige para actualizar la vista
         elif 'eliminar' in request.POST:
             pc_id = request.POST.get('pc_id')
             computador = get_object_or_404(Computadores, id_computador=pc_id)
             computador.delete()
+            # Actualiza el conteo de computadores en la sala tras la eliminación
             sala.inventario_cantidad = Computadores.objects.filter(id_sala=sala).count()
             sala.save(update_fields=['inventario_cantidad']) 
+            # Redirige tras la eliminación para evitar reenvíos accidentales del formulario
             return redirect('pc', sala_id=sala_id)
         elif 'crear' in request.POST:
+            # Verifica si la capacidad de la sala ha sido alcanzada
             if computadores.count() >= sala.capacidad:
                 return render(request, 'pc.html', {
                     'sala': sala, 'computadores': computadores_page, 'form': form, 
@@ -89,12 +92,16 @@ def pc(request, sala_id):
             if form.is_valid():
                 form.instance.id_sala = sala
                 form.save()
+                # Actualiza el conteo de computadores tras la creación
                 sala.inventario_cantidad = Computadores.objects.filter(id_sala=sala).count()
                 sala.save(update_fields=['inventario_cantidad']) 
                 return redirect('pc', sala_id=sala_id)
     else:
         form = ComputadorForm()
 
- 
-
-    return render(request, 'pc.html', {'sala': sala, 'computadores': computadores_page, 'form': form, 'error_message': None})
+    return render(request, 'pc.html', {
+        'sala': sala,
+        'computadores': computadores_page, 
+        'form': form,
+        'error_message': None
+    })

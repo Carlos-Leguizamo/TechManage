@@ -69,57 +69,10 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Modal para editar Computador -->
-                        <div class="modal fade" id="editPcModal{{ computador.id_computador }}" tabindex="-1" aria-labelledby="editPcModalLabel{{ computador.id_computador }}" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editPcModalLabel{{ computador.id_computador }}">Editar Computador</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <form method="post" action="{% url 'pc' sala_id=sala.id_sala %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="id_sala" value="{{ sala.id_sala }}">
-                                        <input type="hidden" name="pc_id" value="{{ computador.id_computador }}">
-                                        <div class="modal-body">
-                                            <div class="mb-3">
-                                                <label for="tipo" class="form-label">Tipo</label>
-                                                <input type="text" class="form-control" id="tipo" name="tipo" value="{{ computador.tipo }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="marca" class="form-label">Marca</label>
-                                                <input type="text" class="form-control" id="marca" name="marca" value="{{ computador.marca }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="modelo" class="form-label">Modelo</label>
-                                                <input type="text" class="form-control" id="modelo" name="modelo" value="{{ computador.modelo }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="numero_serie" class="form-label">Número de Serie</label>
-                                                <input type="text" class="form-control" id="numero_serie" name="numero_serie" value="{{ computador.numero_serie }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="fecha_adquisicion" class="form-label">Fecha de Adquisición</label>
-                                                <input type="date" class="form-control" id="fecha_adquisicion" name="fecha_adquisicion" value="{{ computador.fecha_adquisicion }}" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="estado" class="form-label">Estado</label>
-                                                <select class="form-select" id="estado" name="estado" required>
-                                                    <option value="operativo" {% if computador.estado == "Operativo" %}selected{% endif %}>Operativo</option>
-                                                    <option value="en reparación" {% if computador.estado == "En reparación" %}selected{% endif %}>En reparación</option>
-                                                    <option value="dado de baja" {% if computador.estado == "Dado de baja" %}selected{% endif %}>Dado de baja</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                                            <button type="submit" name="editar" class="btn btn-warning">Guardar Cambios</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-center">No hay computadores disponibles.</td>
+                        </tr>
                         {% endfor %}
                     </tbody>
                 </table>
@@ -220,5 +173,10 @@
         </div>
     </div>
 </div>
+{% if success_message %}
+<div class="alert alert-success" role="alert">
+    {{ success_message }}
+</div>
+{% endif %}
 
 {% endblock %}
