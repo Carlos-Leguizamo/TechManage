@@ -37,16 +37,10 @@
                             <td class="text-center">{{ reporte.tecnico_responsable }}</td>
                             <td class="text-center">
                                 <!-- Botón de Ver -->
-                                <a href="{% url 'view_report' reporte.id_reportes %}" class="btn btn-info">
+                                <a href="{% url 'view_report' reporte.id_reportes %}" class="btn btn-info" target="_blank">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-                                <!-- Formulario de Eliminación -->
-                                <form method="post" action="{% url 'delete_report' reporte.id_reportes %}" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" name="eliminar" class="btn btn-danger">
-                                        <i class="fa-solid fa-trash"></i>
-                                    </button>
-                                </form>
+
                             </td>
                         </tr>
                         {% empty %}

@@ -17,7 +17,7 @@
                     <label for="id_computador" class="form-label">ID del Computador</label>
                     <select class="form-select" id="id_computador" name="id_computador" required>
                         {% for computador in computadores %}
-                        <option value="{{ computador.id_computador }}">{{ computador.nombre_computador }}</option>
+                        <option value="{{ computador.id_computador }}">{{ computador.id_computador }}</option>
                         {% endfor %}
                     </select>
                 </div>

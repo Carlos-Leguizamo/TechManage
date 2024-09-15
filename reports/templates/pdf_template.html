@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Reporte en PDF</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reporte: {{ reporte.nombre_reporte }}</h1>
+    <p><strong>ID del Computador:</strong> {{ reporte.id_computador }}</p>
+    <p><strong>Fecha del Reporte:</strong> {{ reporte.fecha }}</p>
+    <p><strong>Técnico Responsable:</strong> {{ reporte.tecnico_responsable }}</p>
+    <p><strong>Descripción:</strong> {{ reporte.descripcion }}</p>
+    <p><strong>Tipo:</strong> {{ computador.tipo }}</p>
+</body>
+</html>
