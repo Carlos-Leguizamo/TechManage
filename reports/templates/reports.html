@@ -40,7 +40,11 @@
                                 <a href="{% url 'view_report' reporte.id_reportes %}" class="btn btn-info" target="_blank">
                                     <i class="fa-solid fa-eye"></i>
                                 </a>
-
+                                  <!-- Botón de Eliminar -->
+                                  <a href="javascript:void(0);" class="btn btn-danger" onclick="openDeleteModal('{{ reporte.id_reportes }}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>                                
+                               
                             </td>
                         </tr>
                         {% empty %}
@@ -50,6 +54,25 @@
                         {% endfor %}
                     </tbody>
                 </table>
+            </div>
+
+            <!-- Modal de confirmación de Bootstrap -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar este reporte?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a id="confirmDelete" href="#" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Paginación con Bootstrap -->
@@ -85,5 +108,19 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Almacena el ID del reporte a eliminar
+    let reporteId;
+
+    // Función para abrir el modal y establecer el ID del reporte
+    function openDeleteModal(id) {
+        reporteId = id;
+        const confirmDeleteButton = document.getElementById('confirmDelete');
+        confirmDeleteButton.href = `/delete_report/${reporteId}/`; // Actualiza el enlace del botón Eliminar
+        new bootstrap.Modal(document.getElementById('deleteModal')).show(); // Muestra el modal
+    }
+</script>
+
 
 {% endblock %}

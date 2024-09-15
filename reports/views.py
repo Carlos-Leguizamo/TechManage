@@ -6,10 +6,12 @@ from room.models import Computadores
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from django.utils import timezone
+
 
 def reports(request):
     reportes_list = Reportes.objects.all()
-    paginator = Paginator(reportes_list, 10)  # Mostrar 10 reportes por página
+    paginator = Paginator(reportes_list, 5)  # Mostrar 10 reportes por página
     page = request.GET.get('page')
     try:
         reportes = paginator.page(page)
@@ -19,12 +21,19 @@ def reports(request):
         reportes = paginator.page(paginator.num_pages)
     return render(request, "reports.html", {'reportes': reportes})
 
+def delete_report(request, id_reportes):
+    reporte = get_object_or_404(Reportes, id_reportes=id_reportes)
+    reporte.delete()
+    return redirect('reports')
+
 def new_report(request):
     computadores = Computadores.objects.all()
     if request.method == 'POST':
         form = ReporteForm(request.POST)
         if form.is_valid():
-            form.save()
+            reporte = form.save(commit=False)
+            reporte.fecha = timezone.now()  # Usa la hora actual en la zona horaria configurada
+            reporte.save()
             return redirect('reports')
     else:
         form = ReporteForm()
@@ -33,18 +42,23 @@ def new_report(request):
 # View para convertir reporte a PDF
 def generate_pdf_view(request, id_reportes):
     reporte = get_object_or_404(Reportes, id_reportes=id_reportes)
+    computador = get_object_or_404(Computadores, id_computador=reporte.id_computador.id_computador)
+
     template_path = 'pdf_template.html'
-    context = {'reporte': reporte}
-    
+    context = {
+        'reporte': reporte,
+        'computador': computador,  # Incluye los datos del computador
+    }
+
     # Cargar plantilla y contexto en el PDF
     template = get_template(template_path)
     html = template.render(context)
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'inline; filename="reporte.pdf"'
-    
+
     # Generar PDF usando pisa
     pisa_status = pisa.CreatePDF(html, dest=response)
     if pisa_status.err:
         return HttpResponse('Error al generar el PDF: %s' % pisa_status.err)
-    
+
     return response

@@ -1,35 +1,82 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Reporte en PDF</title>
+    <title>Reporte PDF</title>
+    <!-- Incluye Bootstrap desde la CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
     <style>
-        body {
-            font-family: Arial, sans-serif;
+           body {
+            font-size: 1.2rem; /* Ajusta el tamaño de fuente global */
         }
         h1 {
-            text-align: center;
+            font-size: 2rem; /* Tamaño de fuente para el título principal */
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+        h3 {
+            font-size: 1.5rem; /* Tamaño de fuente para los subtítulos */
         }
-        table, th, td {
-            border: 1px solid black;
+        .container {
+            margin-top: 20px;
         }
-        th, td {
-            padding: 8px;
-            text-align: left;
+        .section {
+            margin-bottom: 20px;
+        }
+        .section h3 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+        .section strong {
+            font-size: 1.2rem; /* Tamaño de fuente para las etiquetas de fuerte */
+        }
+        .section p {
+            font-size: 1.1rem; /* Tamaño de fuente para los párrafos */
         }
     </style>
 </head>
 <body>
-    <h1>Reporte: {{ reporte.nombre_reporte }}</h1>
-    <p><strong>ID del Computador:</strong> {{ reporte.id_computador }}</p>
-    <p><strong>Fecha del Reporte:</strong> {{ reporte.fecha }}</p>
-    <p><strong>Técnico Responsable:</strong> {{ reporte.tecnico_responsable }}</p>
-    <p><strong>Descripción:</strong> {{ reporte.descripcion }}</p>
-    <p><strong>Tipo:</strong> {{ computador.tipo }}</p>
+    <div class="container">
+        <h1 class="mb-3">Reporte: {{ reporte.nombre_reporte }}</h1>
+        
+        <div class="section">
+            <h3>Detalles del Computador</h3>
+            <div class="mb-3">
+                <strong>Marca:</strong>
+                <p>{{ computador.marca }}</p>
+            </div>
+            <div class="mb-3">
+                <strong>Modelo:</strong>
+                <p>{{ computador.modelo }}</p>
+            </div>
+            <div class="mb-3">
+                <strong>Número de Serie:</strong>
+                <p>{{ computador.numero_serie }}</p>
+            </div>
+            <div class="mb-3">
+                <strong>Fecha de Adquisición:</strong>
+                <p>{{ computador.fecha_adquisicion }}</p>
+            </div>
+            <div class="mb-3">
+                <strong>Estado:</strong>
+                <p>{{ computador.estado }}</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Detalles del Reporte</h3>
+            <div class="mb-3">
+                <strong>Fecha del Reporte:</strong>
+                <p>{{ reporte.fecha }}</p>
+            </div>
+            <div class="mb-3">
+                <strong>Descripción:</strong>
+                <p>{{ reporte.descripcion }}</p>
+            </div>
+            <div class="mb-3">
+                <strong>Técnico Responsable:</strong>
+                <p>{{ reporte.tecnico_responsable }}</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
