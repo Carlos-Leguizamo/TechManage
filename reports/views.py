@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Reportes
 from .forms import ReporteForm
-from room.models import Computadores
+from room.models import Computadores, Sala
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -11,7 +11,7 @@ from django.utils import timezone
 
 def reports(request):
     reportes_list = Reportes.objects.all()
-    paginator = Paginator(reportes_list, 5)  # Mostrar 10 reportes por página
+    paginator = Paginator(reportes_list, 5)  # Mostrar 5 reportes por página
     page = request.GET.get('page')
     try:
         reportes = paginator.page(page)
@@ -43,11 +43,13 @@ def new_report(request):
 def generate_pdf_view(request, id_reportes):
     reporte = get_object_or_404(Reportes, id_reportes=id_reportes)
     computador = get_object_or_404(Computadores, id_computador=reporte.id_computador.id_computador)
+    sala = get_object_or_404(Sala, id_sala=computador.id_sala.id_sala)  # Obtén la sala del computador
 
     template_path = 'pdf_template.html'
     context = {
         'reporte': reporte,
         'computador': computador,  # Incluye los datos del computador
+        'sala': sala  # Incluye la sala en el contexto
     }
 
     # Cargar plantilla y contexto en el PDF

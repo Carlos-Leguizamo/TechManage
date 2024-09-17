@@ -1,82 +1,105 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
-    <title>Reporte PDF</title>
-    <!-- Incluye Bootstrap desde la CDN -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ reporte.nombre_reporte }}</title>
     <style>
-           body {
-            font-size: 1.2rem; /* Ajusta el tamaño de fuente global */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        h1 {
-            font-size: 2rem; /* Tamaño de fuente para el título principal */
+
+        body {
+            width: 100%;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
         }
-        h3 {
-            font-size: 1.5rem; /* Tamaño de fuente para los subtítulos */
+
+        .report-title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 0;
         }
-        .container {
-            margin-top: 20px;
+
+        .report-date {
+            font-size: 1.3rem;
+            text-align: right; /* Alinea el texto a la derecha */
         }
-        .section {
-            margin-bottom: 20px;
+
+        .section div {
+            margin-bottom: 0.5rem; /* Espacio entre cada línea de información */
         }
-        .section h3 {
-            border-bottom: 2px solid #333;
-            padding-bottom: 5px;
-            margin-bottom: 10px;
-        }
+
         .section strong {
-            font-size: 1.2rem; /* Tamaño de fuente para las etiquetas de fuerte */
+            font-size: 1.4rem;
         }
+
+        .section span{
+            font-size: 1.4rem;
+        }
+
         .section p {
-            font-size: 1.1rem; /* Tamaño de fuente para los párrafos */
+            margin-top: 2rem;
+            font-size: 1.6rem;
+            line-height: 1.5;
+            text-align: justify;
+            font-weight: normal;
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h1 class="mb-3">Reporte: {{ reporte.nombre_reporte }}</h1>
+    <div>
+        <h1 class="report-title">{{ reporte.nombre_reporte }}</h1>
+        <span class="report-date">{{ reporte.fecha }}</span>
+        <div class="report-date">
+            <strong>Técnico Responsable:</strong>
+            <span>{{ reporte.tecnico_responsable }}</span>
+        </div>
+
         
         <div class="section">
-            <h3>Detalles del Computador</h3>
-            <div class="mb-3">
+            <div>
+                <strong>{{ computador.tipo }}</strong>
+            </div>
+            <div>
+                <strong>Sala:</strong>
+                <span>{{ sala.nombre_sala }}</span> <!-- Nueva línea para mostrar el nombre de la sala -->
+            </div>
+            <div>
                 <strong>Marca:</strong>
-                <p>{{ computador.marca }}</p>
+                <span>{{ computador.marca }}</span>
             </div>
-            <div class="mb-3">
+            <div>
                 <strong>Modelo:</strong>
-                <p>{{ computador.modelo }}</p>
+                <span>{{ computador.modelo }}</span>
             </div>
-            <div class="mb-3">
+            <div>
                 <strong>Número de Serie:</strong>
-                <p>{{ computador.numero_serie }}</p>
+                <span>{{ computador.numero_serie }}</span>
             </div>
-            <div class="mb-3">
+            <div>
                 <strong>Fecha de Adquisición:</strong>
-                <p>{{ computador.fecha_adquisicion }}</p>
-            </div>
-            <div class="mb-3">
-                <strong>Estado:</strong>
-                <p>{{ computador.estado }}</p>
+                <span>{{ computador.fecha_adquisicion }}</span>
             </div>
         </div>
 
+        <!-- Sección de detalles del reporte -->
         <div class="section">
-            <h3>Detalles del Reporte</h3>
-            <div class="mb-3">
-                <strong>Fecha del Reporte:</strong>
-                <p>{{ reporte.fecha }}</p>
+            <div>
+                <p> {{ reporte.descripcion }}</p>
             </div>
-            <div class="mb-3">
-                <strong>Descripción:</strong>
-                <p>{{ reporte.descripcion }}</p>
-            </div>
-            <div class="mb-3">
-                <strong>Técnico Responsable:</strong>
-                <p>{{ reporte.tecnico_responsable }}</p>
-            </div>
+
         </div>
     </div>
 </body>
+
 </html>
