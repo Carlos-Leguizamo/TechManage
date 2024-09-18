@@ -42,5 +42,14 @@
     </div>
 </div>
 
+<!-- Agrega el CSS dentro del bloque head o de contenido -->
+<style>
+    /* Deshabilitar redimensionado del textarea */
+    #descripcion {
+        resize: none;
+        overflow: hidden; /* Oculta el scroll */
+    }
+</style>
+
 <script src="{% static 'js/new_reports.js' %}"></script>
 {% endblock %}
