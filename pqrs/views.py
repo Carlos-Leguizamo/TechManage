@@ -8,23 +8,32 @@ from .forms import PQRSForm
 
 # Logica para retornar la vista de PQRS
 
+
+#Flujo para el registro del PQRS en la BD
 def view_pqrs(request):
-    # Si la solicitud se hace a traves del metodo POST
     if request.method == 'POST':
         form = PQRSForm(request.POST)
         if form.is_valid():
             pqrs = form.save(commit=False)
             pqrs.fecha_creacion = timezone.now()  # Establecer la fecha de creación
-            pqrs.id = request.user  # Asociar el usuario (id) actual
-            pqrs.save()
+            pqrs.estado = 'pendiente'  # Establecer el estado por defecto
+            pqrs.usuario = request.user  # Asociar el usuario actual
+            pqrs.save()  # Guardar el objeto en la base de datos
             messages.success(request, 'Su solicitud PQRS ha sido creada con éxito.')
-            return redirect('success_url')  # Url a redirigir kluiego de validad y guardadr los daots en la BD 
+            return redirect('view-pending-pqrs')  # Redirigir a la vista de PQRS pendientes
     else:
         form = PQRSForm()
 
     context = {
         'form': form,
-        'TIPO_CHOICES': PQRS.TIPO_CHOICES  # Pasar las opciones de tipo (Queja, Peticion, etc..) a la plantilla
+        'TIPO_CHOICES': PQRS.TIPO_CHOICES  # Pasar las opciones de tipo a la plantilla
     }
     return render(request, 'pqrs.html', context)
+
+def pending_pqrs(request):
+    pqrs_pendientes = PQRS.objects.filter(estado='pendiente', usuario=request.user)  # Cambiar 'id' a 'usuario'
+    context = {
+        'pqrs_pendientes': pqrs_pendientes,
+    }
+    return render(request, 'pending-pqrs.html', context)
 

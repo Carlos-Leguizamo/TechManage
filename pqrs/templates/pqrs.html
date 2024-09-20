@@ -2,18 +2,6 @@
 
 {% block content %}
 <div class="container my-5">
-    <!-- Mostrar mensajes de éxito o error -->
-    {% if messages %}
-        <div class="alert-container">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
-
     <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="card shadow">
@@ -30,20 +18,87 @@
                                 <label for="tipo" class="form-label">Tipo de Solicitud</label>
                                 <select id="tipo" name="tipo" class="form-select" required>
                                     <option value="" disabled selected>Seleccione una opción</option>
-                                    {% for tipo_value, tipo_label in TIPO_CHOICES  %}
+                                    {% for tipo_value, tipo_label in TIPO_CHOICES %}
                                     <option value="{{ tipo_value }}">{{ tipo_label }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
                         </div>
+                        
 
                         <!-- Campo de Descripción -->
                         
                         <div class="mb-3">
-                             <label for="descripcion" class="form-label">Descripción</label>
-                             <textarea id="descripcion" name="descripcion" class="form-control" rows="2" placeholder="Escriba aquí los detalles de su solicitud..." required minlength="30" style="resize: none; height: 200px;"></textarea>
+                            <label for="descripcion" class="form-label">Descripción</label>
+                            {{ form.descripcion }} <!-- Renderiza el campo del formulario Django -->
+                            <div id="charCount" class="mt-2" style="color: gray;">Caracteres restantes: 500</div>
+                            <div class="alert alert-secondary" role="alert" id="error-message" style="display: none;">
+                                La descripción es demasiado corta o contiene caracteres no permitidos.
+                            </div>
                         </div>
 
+                        <!-- Mensaje que muestra si el egistro del PQRS fue de manera exitosa  -->
+                        
+                        {% if messages %}
+                            <div class="alert-container">
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <!-- Script para controlar el manejo de los caracteres espcieales, minlenght-maxlenght, etc -->
+                        
+                        <script>
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const descripcion = document.getElementById('id_descripcion');  // Asegúrate de que el id coincida con el generado por Django
+                                const charCount = document.getElementById('charCount');
+                                const errorMessage = document.getElementById('error-message');
+                                const minLength = 30;  // Longitud mínima permitida
+                                const maxLength = 500; // Longitud máxima permitida
+                        
+                                function updateCharCount() {
+                                    const length = descripcion.value.length;
+                                    const remaining = maxLength - length;
+                        
+                                    charCount.textContent = `Caracteres restantes: ${remaining >= 0 ? remaining : 0}`;
+                                    charCount.style.color = remaining < 0 ? 'red' : 'gray';
+                        
+                                    // Mostrar el mensaje de error solo si el texto es menor que el mínimo y no está vacío
+                                    if (length > 0 && length < minLength) {
+                                        errorMessage.style.display = 'block';
+                                    } else {
+                                        errorMessage.style.display = 'none';
+                                    }
+                                }
+                        
+                                function autoResize() {
+                                    descripcion.style.height = 'auto';  // Reinicia la altura para recalcular
+                                    descripcion.style.height = `${descripcion.scrollHeight}px`;  // Ajusta según el contenido
+                                }
+                        
+                                function enforceMaxLength() {
+                                    if (descripcion.value.length > maxLength) {
+                                        descripcion.value = descripcion.value.slice(0, maxLength);
+                                    }
+                                }
+                        
+                                descripcion.addEventListener('input', function() {
+                                    updateCharCount();
+                                    autoResize();
+                                    enforceMaxLength();
+                                });
+                        
+                                updateCharCount(); // Inicializa el contador de caracteres
+                                autoResize(); // Inicializa el tamaño del textarea sin scroll
+                            });
+                        </script>   
+                              
+                        <!-- Btn para el envio del formulario -->
+                        
                         <button type="submit" class="btn btn-primary w-100">Enviar Solicitud</button>
                     </form>
                 </div>

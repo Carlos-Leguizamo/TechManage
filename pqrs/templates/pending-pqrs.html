@@ -1,0 +1,49 @@
+{% extends 'dashboard.html' %}
+
+
+{% block content %}
+<div class="container mt-4">
+    <h2>PQRS Pendientes</h2>
+
+    {% if pqrs_pendientes %}
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Descripción</th>
+                    <th>Fecha de Creación</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pqrs in pqrs_pendientes %}
+                <tr>
+                    <td>{{ pqrs.id_pqrs }}</td>
+                    <td>{{ pqrs.descripcion }}</td>
+                    <td>{{ pqrs.fecha_creacion }}</td>
+                    <td>{{ pqrs.get_estado_display }}</td>
+                    <td>
+                        <!-- Botón para marcar como resuelto -->
+                        <form method="POST" action="" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success btn-sm">Marcar como Resuelto</button>
+                        </form>
+                        
+                        <!-- Botón para eliminar (solo si ya está resuelto) -->
+                        {% if pqrs.estado == 'resuelto' %}
+                        <form method="POST" action="" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No tienes PQRS pendientes.</p>
+    {% endif %}
+</div>
+{% endblock %}
