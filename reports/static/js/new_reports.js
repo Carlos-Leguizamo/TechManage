@@ -1,29 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const descripcion = document.getElementById('descripcion');
-    const charCount = document.getElementById('charCount');
-    const form = document.getElementById('reportForm');
-    const errorMessage = document.getElementById('error-message');
-    const minLength = 500;
+    var descripcion = document.getElementById('descripcion');
+    var maxLength = 500;
 
     function updateCharCount() {
-        const length = descripcion.value.length;
-        const remaining = minLength - length;
-        charCount.textContent = `Caracteres restantes: ${remaining >= 0 ? remaining : 0}`;
-        charCount.style.color = remaining < 0 ? 'red' : 'gray';
+        var charCount = descripcion.value.length;
+        var charCountElement = document.getElementById('charCount');
+        charCountElement.textContent = 'Caracteres restantes: ' + (maxLength - charCount);
     }
 
-    function validateForm(event) {
-        const length = descripcion.value.length;
-        if (length < minLength) {
-            event.preventDefault(); // Evita que el formulario se envíe
-            errorMessage.classList.remove('d-none'); // Muestra el mensaje de error
-        } else {
-            errorMessage.classList.add('d-none'); // Oculta el mensaje de error
+    function autoResize() {
+        descripcion.style.height = 'auto';
+        descripcion.style.height = descripcion.scrollHeight + 'px';
+    }
+
+    function enforceMaxLength() {
+        if (descripcion.value.length > maxLength) {
+            descripcion.value = descripcion.value.slice(0, maxLength);
         }
     }
 
-    descripcion.addEventListener('input', updateCharCount);
-    form.addEventListener('submit', validateForm);
+    descripcion.addEventListener('input', function() {
+        updateCharCount();
+        autoResize();
+        enforceMaxLength();
+    });
 
     updateCharCount(); // Inicializa el contador de caracteres
+    autoResize(); // Inicializa el tamaño del textarea
 });
