@@ -1,0 +1,118 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<!-- Sección del título -->
+<div class="container-fluid px-4">
+    <h1 class="mt-4 mb-4 text-center">Gestión de PQRS</h1>
+
+    <!-- Sección de administración de PQRS -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-user-cog"></i> Administrar PQRS pendientes
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th class="text-center">ID</th>
+                            <th class="text-center">Usuario</th>
+                            <th class="text-center">Fecha de Creación</th>
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Tipo</th>
+                            <th class="text-center" style="width: 150px">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if pqrs_list %}
+                            {% for pqrs in pqrs_list %}
+                            <tr>
+                                <td class="text-center">{{ pqrs.id_pqrs }}</td>
+                                <td class="text-center">{{ pqrs.usuario.username }}</td>
+                                <td class="text-center">{{ pqrs.fecha_creacion }}</td>
+                                <td class="text-center">{{ pqrs.descripcion }}</td>
+                                <td class="text-center">{{ pqrs.tipo }}</td>
+                                <td class="text-center d-flex justify-content-center">
+                                    <form action="{% url 'check_pqrs' pqrs.id_pqrs %}" method="post" style="display:inline-block">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-success btn-sm px-2">
+                                            <i class="fas fa-check me-1"></i> Resuelto
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">No se encontraron PQRS pendientes.</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Mostrar el total de PQRS -->
+            {% if pqrs_list %}
+            <div class="mt-3">
+                <p>Total de PQRS: {{ pqrs_list.paginator.count }}</p>
+            </div>
+            {% endif %}
+
+            <!-- Mostrar mensajes flash -->
+            {% if messages %}
+            <div class="mt-3">
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <!-- Paginación con Bootstrap -->
+            {% if pqrs_list.has_other_pages %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    {% if pqrs_list.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ pqrs_list.previous_page_number }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+
+                    {% for num in pqrs_list.paginator.page_range %}
+                        {% if pqrs_list.number == num %}
+                        <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+                        {% elif num > pqrs_list.number|add:'-3' and num < pqrs_list.number|add:'3' %}
+                        <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if pqrs_list.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ pqrs_list.next_page_number }}" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

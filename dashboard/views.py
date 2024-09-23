@@ -5,7 +5,7 @@ from room.models import Sala
 from room.forms import SalaForm  
 
 
-#@login_required  
+@login_required  
 def dashboard(request):
     return render(request, "dashboard.html")
 

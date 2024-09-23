@@ -1,6 +1,5 @@
 {% extends 'dashboard.html' %}
 
-
 {% block content %}
 <div class="container mt-4">
     <h2>PQRS Pendientes</h2>
@@ -9,41 +8,36 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Descripción</th>
-                    <th>Fecha de Creación</th>
-                    <th>Estado</th>
-                    <th>Acciones</th>
+                    <th class="text-center">ID</th>
+                    <th class="text-center">Descripción</th>
+                    <th class="text-center">Fecha de Creación</th>
+                    <th class="text-center">Estado</th>
                 </tr>
             </thead>
             <tbody>
                 {% for pqrs in pqrs_pendientes %}
                 <tr>
-                    <td>{{ pqrs.id_pqrs }}</td>
-                    <td>{{ pqrs.descripcion }}</td>
-                    <td>{{ pqrs.fecha_creacion }}</td>
-                    <td>{{ pqrs.get_estado_display }}</td>
-                    <td>
-                        <!-- Botón para marcar como resuelto -->
-                        <form method="POST" action="" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-success btn-sm">Marcar como Resuelto</button>
-                        </form>
-                        
-                        <!-- Botón para eliminar (solo si ya está resuelto) -->
-                        {% if pqrs.estado == 'resuelto' %}
-                        <form method="POST" action="" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                        </form>
-                        {% endif %}
-                    </td>
+                    <td class="text-center">{{ pqrs.id_pqrs }}</td>
+                    <td class="text-center">{{ pqrs.descripcion }}</td>
+                    <td class="text-center">{{ pqrs.fecha_creacion }}</td>
+                    <td class="text-center">{{ pqrs.get_estado_display }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
         <p>No tienes PQRS pendientes.</p>
+    {% endif %}
+
+    
+    {% if messages %}
+        <div class="alert-container mt-3">
+            {% for message in messages %}           
+                <div class="alert alert-secondary" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
 </div>
 {% endblock %}
