@@ -25,8 +25,10 @@ urlpatterns = [
      path("", include("dashboard.urls")),  # Incluye las URLs de dashboard
      path("", include("room.urls")),  # Incluye las URLs de sala
      path("", include("users.urls")),  # Incluye las URLs de users
+     path("", include("reports.urls")),  # Incluye las URLs de reports
      path("", include("pqrs.urls")),  # Incluye las URLs de PQRS
    
+
 
     
 ]

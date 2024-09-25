@@ -1,0 +1,126 @@
+{% extends "dashboard.html" %}
+{% block content %}
+
+<div class="container-lg mt-4">
+    <!-- Card con tabla de gestión de reportes -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Gestión de <b>Reportes</b></h5>
+            <a href="{% url 'new_report' %}" class="btn btn-info">
+                <i class="fa fa-plus"></i> Nuevo Reporte
+            </a>
+        </div>
+        <div class="card-body">
+            <!-- Mensaje de error -->
+            {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+            {% endif %}
+
+            <!-- Tabla de reportes -->
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nombre del Reporte</th>
+                            <th class="text-center">Fecha del Reporte</th>
+                            <th class="text-center">Técnico Responsable</th>
+                            <th class="text-center" style="width:152px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reporte in reportes %}
+                        <tr>
+                            <td class="text-center">{{ reporte.nombre_reporte }}</td>
+                            <td class="text-center">{{ reporte.fecha }}</td>
+                            <td class="text-center">{{ reporte.tecnico_responsable }}</td>
+                            <td class="text-center">
+                                <!-- Botón de Ver -->
+                                <a href="{% url 'view_report' reporte.id_reportes %}" class="btn btn-info" target="_blank">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                                  <!-- Botón de Eliminar -->
+                                  <a href="javascript:void(0);" class="btn btn-danger" onclick="openDeleteModal('{{ reporte.id_reportes }}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </a>                                
+                               
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center">No hay reportes disponibles.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Modal de confirmación de Bootstrap -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        ¿Estás seguro de que deseas eliminar este reporte?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <a id="confirmDelete" href="#" class="btn btn-danger">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paginación con Bootstrap -->
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if reportes.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ reportes.previous_page_number }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% for num in reportes.paginator.page_range %}
+                    {% if reportes.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > reportes.number|add:'-3' and num < reportes.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if reportes.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ reportes.next_page_number }}" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Almacena el ID del reporte a eliminar
+    let reporteId;
+
+    // Función para abrir el modal y establecer el ID del reporte
+    function openDeleteModal(id) {
+        reporteId = id;
+        const confirmDeleteButton = document.getElementById('confirmDelete');
+        confirmDeleteButton.href = `/delete_report/${reporteId}/`; // Actualiza el enlace del botón Eliminar
+        new bootstrap.Modal(document.getElementById('deleteModal')).show(); // Muestra el modal
+    }
+</script>
+
+
+{% endblock %}
