@@ -78,7 +78,7 @@
               </div>
               Reportes
             </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="{% url 'view-pqrs' %}">
               <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
               PQRS
             </a>
@@ -88,6 +88,12 @@
                 <i class="fa-solid fa-user-tie"></i>
               </div>
               Usuarios
+            </a>
+            <a class="nav-link" href="{% url 'view-admin-pqrs' %}">
+              <div class="sb-nav-link-icon">
+                <i class="fa-solid fa-clipboard-list"></i>
+              </div>
+              Admin PQRS
             </a>
           </div>
         </div>

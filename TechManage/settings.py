@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "dashboard",
     "room",
     "users",
+    "pqrs",
     
     
     
@@ -118,7 +119,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "en-us"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'America/Bogota'  # Zona horaria de Colombia
 
 USE_I18N = True
 
