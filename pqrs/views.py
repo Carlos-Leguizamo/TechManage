@@ -47,9 +47,7 @@ def pending_pqrs(request):
     }
     return render(request, 'pending-pqrs.html', context)
 
-
-
-
+@login_required
 def admin_pqrs(request):
     pqrs = PQRS.objects.all()
     paginator = Paginator(pqrs, 5)
@@ -63,7 +61,7 @@ def admin_pqrs(request):
 
 
 
-
+@login_required
 def confirm_delete_pqrs(request, id):
     # Usar 'id' para obtener el objeto PQRS
     pqrs = get_object_or_404(PQRS, id_pqrs=id)  # Cambia 'id' por 'id_pqrs'
@@ -76,6 +74,7 @@ def confirm_delete_pqrs(request, id):
 
     return render(request, 'confirm_delete_pqrs.html', {'pqrs': pqrs})
 
+@login_required
 def check_pqrs(request, id):
     pqrs = get_object_or_404(PQRS, id_pqrs=id)  # Usa 'id_pqrs' aquí
     return render(request, 'confirm-check-pqrs.html', {'pqrs': pqrs})
