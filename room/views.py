@@ -4,6 +4,8 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Sala, Computadores
 from .forms import SalaForm, ComputadorForm
 
+
+@login_required
 def sala(request):
     form = None
     sala_id = None
@@ -49,6 +51,7 @@ def sala(request):
 
     return render(request, 'sala.html', {'salas': salas_page, 'form': form, 'edit': sala_id is not None})
 
+@login_required
 def pc(request, sala_id):
     sala = get_object_or_404(Sala, id_sala=sala_id)
     computadores = Computadores.objects.filter(id_sala=sala)
