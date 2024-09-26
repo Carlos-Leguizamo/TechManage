@@ -3,7 +3,6 @@ background-color: white;
 font-family: 'Roboto', sans-serif;
 }
 
-
 .card-body-custom {
 background-color: white;
 border-radius: 1rem;
@@ -69,58 +68,6 @@ padding: 2rem;
 border: 1px solid #dee2e6;
 margin-top: 1rem;
 margin-bottom: 2.5rem;
-}
-
-#tutoriales {
-background: linear-gradient(to right, #e8ecf1, #cfd6de);
-padding: 40px 0;
-}
-
-#carta{
-    background-color: red;
-    border-radius: 8px; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-}
-.section-title {
-text-align: center; 
-margin-bottom: 40px; 
-font-size: 2 rem; 
-font-weight: bold;
-}
-
-
-.tutorial-list {
-display: flex; 
-flex-wrap: wrap; /* Permite que los tutoriales se ajusten en múltiples líneas */
-gap: 20px; 
-justify-content: center; 
-}
-
-
-
-.tutorial-item {
-display: flex;
-flex-direction: column; 
-justify-content: space-between;
-background-color: #dfdfdf; 
-border-radius: 8px; 
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-padding: 20px;
-width: calc(33.333% - 20px); /* Tres tutoriales por fila con espacio */
-box-sizing: border-box; 
-height: 100%; 
-min-height: 300px;
-}
-
-.tutorial-title {
-text-align: justify;
-font-size: 1.5em; 
-margin-bottom: 1rem; 
-color:black;
-}
-
-.tutorial-description {
-margin-bottom: 20px; 
 }
 
 .btn {
