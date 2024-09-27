@@ -4,10 +4,10 @@ font-family: 'Roboto', sans-serif;
 }
 
 .card-body-custom {
-background-color: #ffffff;
-border-radius: 1rem; /* Aumentar ligeramente la curvatura de los bordes */
-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Aumentar la suavidad de la sombra */
-padding: 2rem; /* Aumentar el padding para más espacio interior */
+background-color: white;
+border-radius: 1rem;
+box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+padding: 2rem; 
 border: 1px solid #dee2e6;
 margin-top: 2.5rem;
 margin-bottom: 2.5rem;
@@ -62,72 +62,28 @@ grid-template-columns: 1fr 2fr;
 
 .card-body-custom_tutoriales{
 background-color: #ffffff;
-border-radius: 1rem; /* Aumentar ligeramente la curvatura de los bordes */
-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2); /* Aumentar la suavidad de la sombra */
-padding: 2rem; /* Aumentar el padding para más espacio interior */
+border-radius: 1rem; 
+box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+padding: 2rem; 
 border: 1px solid #dee2e6;
-margin-top: 1 rem;
+margin-top: 1rem;
 margin-bottom: 2.5rem;
 }
 
-#tutoriales {
-background: linear-gradient(to right, #e8ecf1, #cfd6de);
-padding: 40px 0; /* Espaciado vertical */
-}
-
-.section-title {
-text-align: center; /* Centra el título */
-margin-bottom: 40px; /* Espacio debajo del título */
-font-size: 2 rem; /* Tamaño del texto del título */
-font-weight: bold;
-}
-
-.tutorial-list {
-display: flex; /* Usa flexbox para los tutoriales */
-flex-wrap: wrap; /* Permite que los tutoriales se ajusten en múltiples líneas */
-gap: 20px; /* Espacio entre los tutoriales */
-justify-content: center; /* Centra los tutoriales en el contenedor */
-}
-
-.tutorial-item {
-display: flex;
-flex-direction: column; /* Alinea el contenido en una columna */
-justify-content: space-between; /* Asegura que el contenido y el botón se distribuyan en el espacio disponible */
-background-color: #dfdfdf; /* Fondo blanco para los tutoriales */
-border-radius: 8px; /* Bordes redondeados */
-box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-padding: 20px; /* Espaciado interno */
-width: calc(33.333% - 20px); /* Tres tutoriales por fila con espacio */
-box-sizing: border-box; /* Incluye padding en el ancho total */
-height: 100%; /* Asegura que el elemento ocupe todo el espacio disponible en su contenedor */
-min-height: 300px;
-}
-
-.tutorial-title {
-text-align: justify;
-font-size: 1.5em; /* Tamaño del texto del título del tutorial */
-margin-bottom: 1rem; /* Espacio debajo del título */
-color:black;
-}
-
-.tutorial-description {
-margin-bottom: 20px; /* Espacio debajo de la descripción */
-}
-
 .btn {
-display: inline-block; /* Muestra el botón como un bloque en línea */
-padding: 10px 20px; /* Espaciado interno del botón */
-background-color:  #4CAF50;/* Color de fondo del botón */
-color: #fff; /* Color del texto del botón */
-border: none; /* Sin borde */
-border-radius: 4px; /* Bordes redondeados */
-text-decoration: none; /* Quita el subrayado */
-text-align: center; /* Centra el texto dentro del botón */
-width: 150px; /* Ancho fijo del botón */
-max-width: 100%; /* Asegura que el botón no se extienda más allá del contenedor */
+display: inline-block; 
+padding: 10px 20px; 
+background-color:  #4CAF50;
+color: #fff; 
+border: none; 
+border-radius: 4px; 
+text-decoration: none; 
+text-align: center; 
+width: 150px; 
+max-width: 100%; 
 box-sizing: border-box; /* Incluye padding en el ancho total */
 align-self: center; /* Centra el botón en su contenedor */
-margin-top: auto; /* Empuja el botón al final del contenedor si es necesario */
+margin-top: auto; 
 }
 
 .btn:hover{
