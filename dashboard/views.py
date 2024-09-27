@@ -1,40 +1,34 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from room.models import Sala
-from room.forms import SalaForm  
-
+from django.db.models import Q
+from room.models import Sala, Computadores
 
 @login_required  
 def dashboard(request):
     return render(request, "dashboard.html")
 
-def sala(request):
-    if request.method == 'POST':
-        if 'editar' in request.POST:
-            sala_id = request.POST.get('sala_id')
-            sala = get_object_or_404(Sala, id_sala=sala_id)
-            form = SalaForm(request.POST, instance=sala)
-            if form.is_valid():
-                form.save()
-                return redirect('sala')
-        elif 'eliminar' in request.POST:
-            sala_id = request.POST.get('sala_id')
-            sala = get_object_or_404(Sala, id_sala=sala_id)
-            sala.delete()
-            return redirect('sala')
-        elif 'crear' in request.POST:
-            form = SalaForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('sala')
-    else:
-        sala_id = request.GET.get('sala_id')
-        if sala_id:
-            sala = get_object_or_404(Sala, id_sala=sala_id)
-            form = SalaForm(instance=sala)
-        else:
-            form = SalaForm()
-    
+@login_required
+def buscador(request):
+    busqueda = request.GET.get("buscar")
     salas = Sala.objects.all()
-    return render(request, 'sala.html', {'salas': salas, 'form': form, 'edit': sala_id is not None})
+    computadores = Computadores.objects.all()
+
+    if busqueda:
+        salas = salas.filter(
+            Q(nombre_sala__icontains=busqueda) |
+            Q(ubicacion__icontains=busqueda)
+        ).distinct()
+        computadores = computadores.filter(
+            Q(tipo__icontains=busqueda) |
+            Q(marca__icontains=busqueda) |
+            Q(modelo__icontains=busqueda) |
+            Q(estado__icontains=busqueda)
+        ).distinct()
+
+    context = {
+        'salas': salas,
+        'computadores': computadores,
+        'busqueda': busqueda,
+    }
+
+    return render(request, 'buscador.html', context)
