@@ -91,11 +91,9 @@ python manage.py runserver
 
 ## :earth_africa: Lenguajes:
 
-<img src="./img/html5-original.svg" alt="Html 5" width="50" height="40">
-<img src="./img/python-original.svg" alt="Python" width="50" height="40">
-<img src="./img/css3.svg" alt="Css 3" width="50" height="40">
-<img src="./img/mysql-original-wordmark.svg" alt="Css 3" width="50" height="40">
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
+![CSS3](https://camo.githubusercontent.com/2ea2f5d54a9fda39c543ef1d1948b6e5b1fba0798b383963b5550de7c4eb16ee/68747470733a2f2f63646e2e6a7364656c6976722e6e65742f67682f64657669636f6e732f64657669636f6e2f69636f6e732f646a616e676f2f646a616e676f2d706c61696e2e737667)
 
 
 ## :computer: Framework:
