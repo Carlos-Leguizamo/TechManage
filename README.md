@@ -101,8 +101,8 @@ python manage.py runserver
 
 [<img alt="github" width="50px" src="https://raw.githubusercontent.com/coderjojo/coderjojo/master/img/github.svg"/>](https://github.com)
 [<img alt="git" width="50px" src="https://iconape.com/wp-content/png_logo_vector/git-icon.png"/>](https://git-scm.com/)
-[<img alt="clever cloud" width="50px" src="./img/clever-cloud.png"/>](https://www.clever-cloud.com/)
-[<img alt="clever cloud" width="50px" src="./img/font-awesome.svg"/>](https://www.clever-cloud.com/)
+[<img alt="clever-cloud" width="50px" src="./img/clever-cloud.png"/>](https://www.clever-cloud.com)
+[<img alt="font-awesome" width="50px" src="./img/font-awesome.svg"/>](https://fontawesome.com)
 
 
 ### Autores
