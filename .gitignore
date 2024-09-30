@@ -4,3 +4,5 @@ env/
 # Ignorar todas las carpetas pycache
 __pycache__/
 
+# Ignorar las imágenes del readme
+img/
