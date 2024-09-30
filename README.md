@@ -91,54 +91,27 @@ python manage.py runserver
 
 ## :earth_africa: Lenguajes:
 
-[![My Skills](https://skillicons.dev/icons?i=html,css,python,mysql)](https://skillicons.dev)
-
-
+[![Lenguajes](https://skillicons.dev/icons?i=html,css,python,mysql)](https://skillicons.dev)
 
 ## :computer: Framework:
 
-![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+[![Lenguajes](https://skillicons.dev/icons?i=bootstrap,django)](https://skillicons.dev)
 
-## :gear: Herramientas de programación:
+## :gear: Herramientas:
 
 [<img alt="github" width="50px" src="https://raw.githubusercontent.com/coderjojo/coderjojo/master/img/github.svg"/>](https://github.com)
 [<img alt="git" width="50px" src="https://iconape.com/wp-content/png_logo_vector/git-icon.png"/>](https://git-scm.com/)
-
-## :wrench: Sistema operativo :
-
-![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
-
-
-
-Adicionalmente tiene:
-
-* [x] Responsive Celular
-* [x] Responsive Tablet
-* [x] Responsive PC 
-
-Con media query
-
-~~~css
-Responsive Celular
-@media (max-width: 760px) {
-}
-
-Responsive Tablet
-@media (min-width: 768px) and (max-width: 1024px) {
-} 
-
-Responsive PC
-@media (min-width: 1250PX) and (max-width: 1920px) {
-}
-~~~
-
+[<img alt="clever cloud" width="50px" src="./img/clever-cloud.png"/>](https://www.clever-cloud.com/)
+[<img alt="clever cloud" width="50px" src="./img/font-awesome.svg"/>](https://www.clever-cloud.com/)
 
 
 ### Autores
 
-@JohnCamiloGarzonVargas :wave:
+@John Camilo Garzon Vargas :wave:
 
 @Carlos Leguizamo :wave:
+
+@Santiago Firigua :wave:
 
 > [!NOTE]
 > Muchas gracias por prestar atención.
