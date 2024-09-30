@@ -15,31 +15,44 @@
       <div class="row mt-4">
         <!-- Resultados de salas -->
         {% if salas %}
-        <div class="col-md-6">
-          <h5>Salas Encontradas</h5>
-          <ul class="list-group">
-            {% for sala in salas %}
-            <li class="list-group-item">
-              {{ sala.nombre_sala }} - Ubicación: {{ sala.ubicacion }}
-            </li>
-            {% endfor %}
-          </ul>
+        <h5>Salas Encontradas</h5>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for sala in salas %}
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ sala.nombre_sala }}</h5>
+                <p class="card-text">
+                  <strong>Ubicación:</strong> {{ sala.ubicacion }} <br>
+                  <strong>Capacidad:</strong> {{ sala.capacidad }} items <br>
+                  <strong>Inventario:</strong> {{ sala.inventario_cantidad }} items
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
         {% endif %}
 
         <!-- Resultados de computadores -->
         {% if computadores %}
-        <div class="col-md-6">
-          <h5>Computadores Encontrados</h5>
-          <ul class="list-group">
-            {% for computador in computadores %}
-            <li class="list-group-item">
-              Tipo: {{ computador.tipo }} - Marca: {{ computador.marca }} - Modelo: {{ computador.modelo }}
-              <br>
-              Sala: <a href="{% url 'pc' computador.id_sala.id_sala %}">{{ computador.id_sala.nombre_sala }}</a>
-            </li>
-            {% endfor %}
-          </ul>
+        <h5>Computadores Encontrados</h5>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for computador in computadores %}
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ computador.tipo }} - {{ computador.marca }}</h5>
+                <p class="card-text">
+                  <strong>Sala:</strong> <a href="{% url 'pc' computador.id_sala.id_sala %}">{{ computador.id_sala.nombre_sala }}</a> <br>
+                  <strong>Modelo:</strong> {{ computador.modelo }} <br>
+                  <strong>Número de Serie:</strong> {{ computador.numero_serie }} <br>
+                  <strong>Fecha de Adquisición:</strong> {{ computador.fecha_adquisicion|date:"d/m/Y" }} <br>
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
         </div>
         {% endif %}
       </div>
