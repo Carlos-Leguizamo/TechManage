@@ -35,6 +35,8 @@
             {% for computador in computadores %}
             <li class="list-group-item">
               Tipo: {{ computador.tipo }} - Marca: {{ computador.marca }} - Modelo: {{ computador.modelo }}
+              <br>
+              Sala: <a href="{% url 'pc' computador.id_sala.id_sala %}">{{ computador.id_sala.nombre_sala }}</a>
             </li>
             {% endfor %}
           </ul>
