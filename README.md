@@ -71,7 +71,7 @@ pip install -r requirements.txt
  
 En settings.py se pueden encontrar las credenciales de la base de datos
 
-![DB](./img/settings_db.png "DB")
+![DB](img/settings_db.png "DB")
 
 Existen varias herramientas para manejar la base de datos ya sea local o remota:
 
@@ -101,8 +101,8 @@ python manage.py runserver
 
 [<img alt="github" width="50px" src="https://raw.githubusercontent.com/coderjojo/coderjojo/master/img/github.svg"/>](https://github.com)
 [<img alt="git" width="50px" src="https://iconape.com/wp-content/png_logo_vector/git-icon.png"/>](https://git-scm.com/)
-[<img alt="clever-cloud" width="50px" src="img/clever-cloud.png"/>](https://clever-cloud.com)
-[<img alt="font-awesome" width="50px" src="img/font-awesome.svg"/>](https://fontawesome.com)
+[<img alt="clevercloud" width="50px" src="img/clever-cloud.png"/>](https://clever-cloud.com)
+[<img alt="fontawesome" width="50px" src="img/font-awesome.svg"/>](https://fontawesome.com)
 
 
 ### Autores
