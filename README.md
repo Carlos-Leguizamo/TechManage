@@ -6,7 +6,7 @@ estado de sus equipos, asegurando que cada computadora esté en óptimas condici
 
 ***¡Bienvenidos a TechManage! Optimiza y cuida tu inventario tecnológico.***
 
-|
+
 
 
 
@@ -81,9 +81,15 @@ Existen varias herramientas para manejar la base de datos ya sea local o remota:
 + Clever cloud
 + Railway
 
---- 
+---
 
-7. Correr el programa
+7. Correr las migraciones, para cargar las tablas a la base de datos.
+~~~   
+python manage.py migrate
+~~~
+
+
+8. Ejecutar el servidor
 
 ~~~
 python manage.py runserver
@@ -102,21 +108,24 @@ python manage.py runserver
 [<img alt="github" width="50px" src="https://raw.githubusercontent.com/coderjojo/coderjojo/master/img/github.svg"/>](https://github.com)
 [<img alt="git" width="50px" src="https://iconape.com/wp-content/png_logo_vector/git-icon.png"/>](https://git-scm.com/)
 [<img alt="clevercloud" width="50px" src="img/clever-cloud.png"/>](https://clever-cloud.com)
-[<img alt="fontawesome" width="50px" src="img/font-awesome.svg"/>](https://fontawesome.com)
+[<img alt="workbench" width="60px" src="img/workbench.png"/>](https://clever-cloud.com)
+[<img alt="fontawesome" width="50px" src="img/font-awesome.svg"/>](https://www.mysql.com/products/workbench/)
 
+---
 
 ### Autores
 
-@John Camilo Garzon Vargas :wave:
+[John Camilo Garzon](https://github.com/JohnCamiloGarzonVargas) :wave:
 
-@Carlos Leguizamo :wave:
+[Carlos Leguizamo](https://github.com/Carlos-Leguizamo) :wave:
 
-@Santiago Firigua :wave:
+[Santiago Firigua](https://github.com/SFirigua) :wave:
 
+---
 > [!NOTE]
 > Muchas gracias por prestar atención.
 
 
 > [!IMPORTANT]
 > Sacamos iconos para el readme de este repositorio.  
-> [Repositorio Icon](https://github.com/ZooaDeV/ZooaDev/blob/main/README.md)
+> [Repositorio Icon](https://github.com/tandpfun/skill-icons)
