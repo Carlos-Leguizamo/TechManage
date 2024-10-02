@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('fecha', models.DateTimeField()),
                 ('descripcion', models.TextField()),
                 ('tecnico_responsable', models.CharField(max_length=45)),
-                ('id_computador', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='room.computadores')),
+                ('id_computador', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='room.computadores', db_column='id_computador')),
             ],
             options={
                 'db_table': 'Reportes',

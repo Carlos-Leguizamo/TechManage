@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
-from room.models import Computadores
 from django.utils import timezone
+from room.models import Computadores
 
 class Reportes(models.Model):
     id_reportes = models.AutoField(primary_key=True)
@@ -12,5 +11,4 @@ class Reportes(models.Model):
     tecnico_responsable = models.CharField(max_length=45)
 
     class Meta:
-        db_table='Reportes'
- 
+        db_table = 'Reportes'
