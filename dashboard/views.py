@@ -3,11 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from room.models import Sala, Computadores
 
-@login_required  
+
 def dashboard(request):
     return render(request, "dashboard.html")
 
-@login_required
+
+
 def buscador(request):
     busqueda = request.GET.get("buscar")
     salas = Sala.objects.all()
@@ -32,3 +33,4 @@ def buscador(request):
     }
 
     return render(request, 'buscador.html', context)
+
