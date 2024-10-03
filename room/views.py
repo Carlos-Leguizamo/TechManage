@@ -3,6 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Sala, Computadores
 from .forms import SalaForm, ComputadorForm
+import schedule
+import time
+import threading
+from datetime import datetime, timedelta
+from django.utils import timezone
+from django.core.mail import send_mail
+from django.conf import settings
 
 def sala(request):
     form = None
@@ -71,7 +78,7 @@ def pc(request, sala_id):
             form = ComputadorForm(request.POST, instance=computador)
             if form.is_valid():
                 form.save()
-                return redirect('pc', sala_id=sala_id)  # Redirige para actualizar la vista
+                return redirect('pc', sala_id=sala_id)
         elif 'eliminar' in request.POST:
             pc_id = request.POST.get('pc_id')
             computador = get_object_or_404(Computadores, id_computador=pc_id)
@@ -105,3 +112,48 @@ def pc(request, sala_id):
         'form': form,
         'error_message': None
     })
+
+def verificar_mantenimiento():
+    # Obtiene la hora actual
+    ahora = timezone.now()
+    
+    # Obtén todos los computadores
+    computadores = Computadores.objects.all()
+
+    for computador in computadores:
+        # Verifica si la fecha de mantenimiento es hoy o ya pasó
+        if computador.mantenimiento_programado <= ahora:
+            sala = computador.id_sala
+               # Determina el artículo correcto según el tipo de computador
+            if computador.tipo.lower() == "laptop":
+                articulo = "la laptop"
+            else:
+                articulo = "el computador"
+
+            mensaje = (f"Es hora de realizar el mantenimiento para {articulo} de marca {computador.marca} "
+                       f"y modelo {computador.modelo}. Está ubicado en la sala: {sala.nombre_sala}, "
+                       f"ubicación: {sala.ubicacion}.")
+            print(mensaje)  # Puedes seguir imprimiendo el mensaje en consola para registro
+
+            # Envía un correo electrónico
+            send_mail(
+                'Recordatorio de Mantenimiento',
+                mensaje,
+                settings.DEFAULT_FROM_EMAIL, 
+                ['santiagofiriguapalma@gmail.com'] 
+            )
+
+            # Actualiza la fecha de mantenimiento a 6 meses a partir de ahora
+            computador.mantenimiento_programado = ahora + timedelta(days=180)  # 6 meses = 180 días
+            computador.save(update_fields=['mantenimiento_programado'])
+
+def run_schedule():
+    while True:
+        schedule.run_pending()
+        time.sleep(1)  # Espera un minuto antes de volver a verificar
+
+# Programa la tarea cada minuto
+schedule.every().minute.do(verificar_mantenimiento)
+
+# Inicia el hilo para ejecutar el programador de tareas
+threading.Thread(target=run_schedule, daemon=True).start()
