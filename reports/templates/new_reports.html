@@ -25,6 +25,14 @@
                     </select>
                 </div>
                 <div class="mb-3">
+                    <label for="tipo_mantenimiento" class="form-label">Tipo de Mantenimiento</label>
+                    <select class="form-select" id="tipo_mantenimiento" name="tipo_mantenimiento" required>
+                        <option value="" disabled selected>Selecciona el tipo de Mantenimiento</option>
+                        <option value="Preventivo">Preventivo</option>
+                        <option value="Correctivo">Correctivo</option>
+                    </select>
+                </div>                
+                <div class="mb-3">
                     <label for="descripcion" class="form-label">Descripción</label>
                     <textarea class="form-control" id="descripcion" name="descripcion" rows="6"  maxlength="500" required></textarea>
                     <small id="charCount" class="form-text text-muted">Caracteres restantes: 500</small>
