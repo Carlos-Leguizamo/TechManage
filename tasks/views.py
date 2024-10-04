@@ -122,7 +122,7 @@ def send_verification_email(request):
             'Código de verificación',
             f'Este es tu código de verificación: {token}',
             settings.DEFAULT_FROM_EMAIL,
-            ['eldermoreno450@gmail.com']
+            ['techmanage3@gmail.com']
         )
         request.session['token_verificado'] = True
         return redirect('verify_token')

@@ -143,7 +143,7 @@ def verificar_mantenimiento():
                 'Recordatorio de Mantenimiento',
                 mensaje,
                 settings.DEFAULT_FROM_EMAIL, 
-                ['santiagofiriguapalma@gmail.com'] 
+                ['techmanage3@gmail.com'] 
             )
 
             # Actualiza la fecha de mantenimiento a 6 meses a partir de ahora
