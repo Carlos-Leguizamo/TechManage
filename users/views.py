@@ -7,9 +7,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import UserProfile
 from django.contrib.auth.models import User
 from .forms import CustomUserChangeForm 
+from django.contrib.auth.decorators import user_passes_test
+
 
 
 # Logica para mostar los usuarios en la tabal y retornar la vista de la tabla de administracion de usuarios
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def adminusers(request):
     # User.objects.all traigo todo los usuarios de la BD
@@ -22,6 +25,7 @@ def adminusers(request):
     return render(request, "admin-users.html", {"users": users})
 
 # Logica para eliminar usuario
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 # @user_passes_test(lambda u: u.is_superuser)
 def confirm_delete_user(request, token_verification):
@@ -44,6 +48,7 @@ def confirm_delete_user(request, token_verification):
     return render(request, "confirm_delete_user.html", {"user_to_delete": user_to_delete})
 
 # Logica de Confirmacion para eliminar el usuario 
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def delete_user(request, token_verification):
     # Verificar si el token es válido
@@ -53,7 +58,7 @@ def delete_user(request, token_verification):
     # Redirigir a la vista de confirmación de eliminación de usuario
     return redirect("confirm_delete_user", token_verification=token_verification)
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def update_user(request, token_verification):
     user_profile = get_object_or_404(UserProfile, token_verification=token_verification)
@@ -70,4 +75,10 @@ def update_user(request, token_verification):
         form = CustomUserChangeForm(instance=user_to_update)
 
     return render(request, 'confirm_update_user.html', {'form': form, 'user': user_to_update})
-
+@login_required
+def no_auth(request):
+    # Verifica si el usuario es superusuario
+    if request.user.is_superuser:
+        return redirect('dashboard')  
+    
+    return render(request, 'no_auth.html')  

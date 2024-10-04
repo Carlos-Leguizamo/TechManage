@@ -15,6 +15,7 @@ urlpatterns = [
     # URL para la actulizacion de los usuarios 
 
     path('profile/update/<str:token_verification>/', views.update_user, name='update_user'),
+    path('no_autorizado/', views.no_auth, name='no_auth'),
      
 
 
