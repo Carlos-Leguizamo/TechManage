@@ -31,7 +31,6 @@
                                 <th class="text-center">Modelo</th>
                                 <th class="text-center">Serie</th>
                                 <th class="text-center" style="width:200px;">Fecha Adquisición</th>
-                                <th class="text-center" style="width:200px;">Proximo Mantenimiento</th>
                                 <th class="text-center" style="width:150px;">Estado</th>
                                 <th class="text-center">Acciones</th>
                             </tr>
@@ -44,7 +43,6 @@
                                 <td class="text-center">{{ computador.modelo }}</td>
                                 <td class="text-center">{{ computador.numero_serie }}</td>
                                 <td class="text-center">{{ computador.fecha_adquisicion }}</td>
-                                <td class="text-center">{{ computador.mantenimiento_programado }}</td>
                                 <td class="text-center">{{ computador.estado }}</td>
                                 <td class="text-center">
                                     <div class="d-flex justify-content-center gap-1">
@@ -83,9 +81,9 @@
                                                 <div class="mb-3">
                                                     <label for="tipo" class="form-label">Tipo</label>
                                                     <select class="form-control" id="tipo" name="tipo" required>
-                                                        <option value="" disabled {% if computador.tipo %}selected{% endif %}>Selecciona el tipo</option>
-                                                        <option value="computador" {% if computador.tipo == "computador" %}selected{% endif %}>Computador</option>
-                                                        <option value="laptop" {% if computador.tipo == "laptop" %}selected{% endif %}>Portátil</option>
+                                                        <option value="" disabled selected>Selecciona el tipo</option>
+                                                        <option value="computador">Computador</option>
+                                                        <option value="laptop">Portátil</option>
                                                     </select>
                                                 </div>
                                                 <div class="mb-3">
@@ -100,7 +98,7 @@
                                                     <label for="modelo" class="form-label">Modelo</label>
                                                     <input type="text" class="form-control" id="modelo" name="modelo"
                                                         value="{{ computador.modelo }}"
-                                                        pattern="^(?=.*[A-Z0-9])[A-Za-z0-9]+(?: [A-Za-z0-9]+)*$"
+                                                        pattern="^(?=.[A-Z0-9])[A-Za-z0-9]+(?: [A-Za-z0-9]+)$"
                                                         title="El modelo debe contener solo letras, números y espacios, y cada palabra debe comenzar con una letra mayúscula o un número"
                                                         required>
                                                 </div>
@@ -119,22 +117,15 @@
                                                     <input type="date" class="form-control"
                                                         id="fecha_adquisicion_edit_{{ computador.id_computador }}"
                                                         name="fecha_adquisicion"
-                                                        value="{{ computador.fecha_adquisicion|date:'Y-m-d' }}" required>
+                                                        value="{{ computador.fecha_adquisicion }}" required>
                                                 </div>
-                                                <div class="mb-3">
-                                                    <label for="mantenimiento_programado_edit_{{ computador.id_computador }}" class="form-label">Mantenimiento Programado</label>
-                                                    <input type="datetime-local" class="form-control" 
-                                                    id="mantenimiento_programado_edit_{{ computador.id_computador }}" 
-                                                    name="mantenimiento_programado" 
-                                                    value="{{ computador.mantenimiento_programado|date:'Y-m-d H:i' }}" required>
-                                                </div>                                                
                                                 <div class="mb-3">
                                                     <label for="estado" class="form-label">Estado</label>
                                                     <select class="form-select" id="estado" name="estado" required>
-                                                        <option value="" disabled {% if computador.estado %}selected{% endif %}>Selecciona el estado</option>
-                                                        <option value="operativo" {% if computador.estado == "operativo" %}selected{% endif %}>Operativo</option>
-                                                        <option value="en reparación" {% if computador.estado == "en reparación" %}selected{% endif %}>En reparación</option>
-                                                        <option value="dado de baja" {% if computador.estado == "dado de baja" %}selected{% endif %}>Dado de baja</option>
+                                                        <option value="" disabled selected>Selecciona el estado</option>
+                                                        <option value="operativo">Operativo</option>
+                                                        <option value="en reparación">En reparación</option>
+                                                        <option value="dado de baja">Dado de baja</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -148,10 +139,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {% empty %}
-                            <tr>
-                                <td colspan="7" class="text-center">No hay computadores disponibles.</td>
-                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
@@ -236,7 +223,7 @@
                         <div class="mb-3">
                             <label for="modelo" class="form-label">Modelo</label>
                             <input type="text" class="form-control" id="modelo" name="modelo"
-                                value="{{ computador.modelo }}" pattern="^(?=.*[A-Z0-9])[A-Za-z0-9]+(?: [A-Za-z0-9]+)*$"
+                                value="{{ computador.modelo }}" pattern="^(?=.[A-Z0-9])[A-Za-z0-9]+(?: [A-Za-z0-9]+)$"
                                 title="El modelo debe contener solo letras, números y espacios, y cada palabra debe comenzar con una letra mayúscula o un número"
                                 required>
                         </div>
@@ -253,10 +240,6 @@
                                 id="fecha_adquisicion_edit_{{ computador.id_computador }}" name="fecha_adquisicion"
                                 value="{{ computador.fecha_adquisicion }}" required>
                         </div>
-                        <div class="mb-3">
-                            <label for="mantenimiento_programado" class="form-label">Mantenimiento Programado</label>
-                            <input type="datetime-local" class="form-control" id="mantenimiento_programado" name="mantenimiento_programado">
-                        </div>                        
                         <div class="mb-3">
                             <label for="estado" class="form-label">Estado</label>
                             <select class="form-select" id="estado" name="estado" required>
@@ -306,4 +289,4 @@
             myModal.show(); // Mostrar el modal de eliminación
         }
     </script>
-    {% endblock %}
+    {% endblock %}

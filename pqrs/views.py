@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect, get_object_or_404
 from django.contrib import messages
 from .models import PQRS
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import PQRSForm
 from django.core.paginator import Paginator
 
@@ -47,9 +47,8 @@ def pending_pqrs(request):
     }
     return render(request, 'pending-pqrs.html', context)
 
-
-
-
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
+@login_required
 def admin_pqrs(request):
     pqrs = PQRS.objects.all()
     paginator = Paginator(pqrs, 5)
@@ -62,8 +61,8 @@ def admin_pqrs(request):
     return render(request, 'admin-pqrs.html', context)
 
 
-
-
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
+@login_required
 def confirm_delete_pqrs(request, id):
     # Usar 'id' para obtener el objeto PQRS
     pqrs = get_object_or_404(PQRS, id_pqrs=id)  # Cambia 'id' por 'id_pqrs'
@@ -76,6 +75,8 @@ def confirm_delete_pqrs(request, id):
 
     return render(request, 'confirm_delete_pqrs.html', {'pqrs': pqrs})
 
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
+@login_required
 def check_pqrs(request, id):
     pqrs = get_object_or_404(PQRS, id_pqrs=id)  # Usa 'id_pqrs' aquí
     return render(request, 'confirm-check-pqrs.html', {'pqrs': pqrs})
