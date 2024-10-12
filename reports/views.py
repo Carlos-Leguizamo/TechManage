@@ -7,8 +7,9 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.utils import timezone
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def reports(request):
     reportes_list = Reportes.objects.all()
@@ -22,14 +23,14 @@ def reports(request):
         reportes = paginator.page(paginator.num_pages)
     return render(request, "reports.html", {'reportes': reportes})
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def delete_report(request, id_reportes):
     reporte = get_object_or_404(Reportes, id_reportes=id_reportes)
     reporte.delete()
     return redirect('reports')
 
-
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def new_report(request):
     computadores = Computadores.objects.all()
@@ -45,6 +46,7 @@ def new_report(request):
     return render(request, "new_reports.html", {'form': form, 'computadores': computadores})
 
 # View para convertir reporte a PDF
+@user_passes_test(lambda u: u.is_superuser, login_url='no_auth')
 @login_required
 def generate_pdf_view(request, id_reportes):
     reporte = get_object_or_404(Reportes, id_reportes=id_reportes)

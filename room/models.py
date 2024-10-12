@@ -32,6 +32,7 @@ class Computadores(models.Model):
     fecha_adquisicion = models.DateField()
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES)
     id_sala = models.ForeignKey(Sala, on_delete=models.CASCADE)
+    mantenimiento_programado = models.DateTimeField() 
 
     class Meta:
         db_table = 'Computadores'

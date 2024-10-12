@@ -1,7 +1,6 @@
 from django.db import models
-from django.contrib.auth.models import User
-from room.models import Computadores
 from django.utils import timezone
+from room.models import Computadores
 
 class Reportes(models.Model):
     TIPO_MANTENIMIENTO_CHOICES = [
@@ -18,4 +17,6 @@ class Reportes(models.Model):
     tipo_mantenimiento = models.CharField(max_length=11, choices=TIPO_MANTENIMIENTO_CHOICES, default='Preventivo')
 
     class Meta:
+        feature/tipo_mantenimiento
         db_table='Reportes'
+
