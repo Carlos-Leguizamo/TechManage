@@ -17,6 +17,5 @@ class Reportes(models.Model):
     tipo_mantenimiento = models.CharField(max_length=11, choices=TIPO_MANTENIMIENTO_CHOICES, default='Preventivo')
 
     class Meta:
-        feature/tipo_mantenimiento
         db_table='Reportes'
 
