@@ -1,0 +1,66 @@
+{% extends "dashboard.html" %}
+{% load static %}
+{% block content %}
+
+<div class="container-lg mt-4">
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Nuevo <b>Reporte</b></h5>
+        </div>
+        <div class="card-body">
+            <form id="reportForm" method="post" action="{% url 'new_report' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="nombre_reporte" class="form-label">Nombre del Reporte</label>
+                    <input type="text" class="form-control" id="nombre_reporte" name="nombre_reporte" pattern="^[A-Z][a-zA-Z\s]*$"
+                    title="El nombre del reporte debe comenzar con una letra mayúscula y solo puede contener letras y espacios" required>
+                </div>
+                <div class="mb-3">
+                    <label for="id_computador" class="form-label">ID del Computador</label>
+                    <select class="form-select" id="id_computador" name="id_computador" required>
+                        <option value="" disabled selected>Selecciona el id del equipo</option>
+                        {% for computador in computadores %}
+                        <option value="{{ computador.id_computador }}">{{ computador.id_computador }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="tipo_mantenimiento" class="form-label">Tipo de Mantenimiento</label>
+                    <select class="form-select" id="tipo_mantenimiento" name="tipo_mantenimiento" required>
+                        <option value="" disabled selected>Selecciona el tipo de Mantenimiento</option>
+                        <option value="Preventivo">Preventivo</option>
+                        <option value="Correctivo">Correctivo</option>
+                    </select>
+                </div>                
+                <div class="mb-3">
+                    <label for="descripcion" class="form-label">Descripción</label>
+                    <textarea class="form-control" id="descripcion" name="descripcion" rows="6"  maxlength="500" required></textarea>
+                    <small id="charCount" class="form-text text-muted">Caracteres restantes: 500</small>
+                    <!-- Mensaje de error -->
+                    <div id="error-message" class="alert alert-danger mt-2 d-none" role="alert">
+                        La descripción debe tener al menos 500 caracteres.
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="tecnico_responsable" class="form-label">Técnico Responsable</label>
+                    <input type="text" class="form-control" id="tecnico_responsable" name="tecnico_responsable" pattern="([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*" title="El nombre del técnico responsable debe empezar con una letra mayúscula y solo puede contener letras y espacios."  required>
+                </div>
+                <button type="submit" class="btn btn-primary">Crear Reporte</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Agrega el CSS dentro del bloque head o de contenido -->
+<style>
+    /* Deshabilitar redimensionado del textarea */
+    #descripcion {
+        resize: none;
+        overflow-y: hidden; /* Oculta el scroll */
+    }
+</style>
+
+<script src="{% static 'js/new_reports.js' %}"></script>
+<script src="{% static 'js/text.js' %}"></script>
+
+{% endblock %}

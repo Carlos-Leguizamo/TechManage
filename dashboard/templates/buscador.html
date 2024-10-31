@@ -1,0 +1,70 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<main>
+  <div class="container-fluid px-4">
+    <h1 class="mt-4">Resultados de la Búsqueda</h1>
+    <ol class="breadcrumb mb-4">
+      <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+      <li class="breadcrumb-item active">Resultados</li>
+    </ol>
+
+    {% if busqueda %}
+      <h4>Resultados para: "{{ busqueda }}"</h4>
+      
+      <div class="row mt-4">
+        <!-- Resultados de salas -->
+        {% if salas %}
+        <h5>Salas Encontradas</h5>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for sala in salas %}
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ sala.nombre_sala }}</h5>
+                <p class="card-text">
+                  <strong>Ubicación:</strong> {{ sala.ubicacion }} <br>
+                  <strong>Capacidad:</strong> {{ sala.capacidad }} items <br>
+                  <strong>Inventario:</strong> {{ sala.inventario_cantidad }} items
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+
+        <!-- Resultados de computadores -->
+        {% if computadores %}
+        <h5>Computadores Encontrados</h5>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+          {% for computador in computadores %}
+          <div class="col">
+            <div class="card h-100">
+              <div class="card-body">
+                <h5 class="card-title">{{ computador.tipo }} - {{ computador.marca }}</h5>
+                <p class="card-text">
+                  <strong>Sala:</strong> <a href="{% url 'pc' computador.id_sala.id_sala %}">{{ computador.id_sala.nombre_sala }}</a> <br>
+                  <strong>Modelo:</strong> {{ computador.modelo }} <br>
+                  <strong>Número de Serie:</strong> {{ computador.numero_serie }} <br>
+                  <strong>Fecha de Adquisición:</strong> {{ computador.fecha_adquisicion|date:"d/m/Y" }} <br>
+                </p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Si no hay resultados de salas ni computadores -->
+      {% if not salas and not computadores %}
+      <p>No se encontraron resultados.</p>
+      {% endif %}
+
+    {% else %}
+      <p>No se ha realizado ninguna búsqueda.</p>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

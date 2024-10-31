@@ -1,0 +1,227 @@
+{% extends "dashboard.html" %}
+{% block content %}
+
+<div class="container-lg mt-4">
+    <!-- Card con tabla de gestión de salas -->
+    <div class="card mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5>Gestión de <b>Salas</b></h5>
+            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#addSalaModal">
+                <i class="fa fa-plus"></i> Nueva Sala
+            </button>
+        </div>
+        <div class="card-body">
+            <!-- Mensaje de error -->
+            {% if error_message %}
+            <div class="alert alert-danger" role="alert">
+                {{ error_message }}
+            </div>
+            {% endif %}
+
+            <!-- Tabla de salas -->
+            <div class="table-responsive">
+                <table class="table table-bordered mb-0">
+                    <thead>
+                        <tr>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Capacidad</th>
+                            <th class="text-center">Ubicación</th>
+                            <th class="text-center">Inventario</th>
+                            <th class="text-center" style="width:152px;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for sala in salas %}
+                        <tr>
+                            <td class="text-center">{{ sala.nombre_sala }}</td>
+                            <td class="text-center">{{ sala.capacidad }}</td>
+                            <td class="text-center">{{ sala.ubicacion }}</td>
+                            <td class="text-center">{{ sala.inventario_cantidad }}</td>
+                            <td class="text-center">
+                                <!-- Botón de Editar -->
+                                <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#editSalaModal{{ sala.id_sala }}">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </button>
+
+                                <!-- Botón de Eliminación -->
+                                <button type="button" class="btn btn-danger"
+                                    onclick="openDeleteModal('{{ sala.id_sala }}')">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                                <!-- Botón de Ver -->
+                                <a href="{% url 'pc' sala.id_sala %}" class="btn btn-info">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+
+                        <!-- Modal para editar Sala -->
+                        <div class="modal fade" id="editSalaModal{{ sala.id_sala }}" tabindex="-1"
+                            aria-labelledby="editSalaModalLabel{{ sala.id_sala }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="editSalaModalLabel{{ sala.id_sala }}">Editar Sala
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="{% url 'sala' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="edit_nombre_sala" class="form-label">Nombre de Sala</label>
+                                                <input type="text" class="form-control" id="edit_nombre_sala"
+                                                    name="nombre_sala" value="{{ sala.nombre_sala }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit_capacidad" class="form-label">Capacidad</label>
+                                                <input type="number" class="form-control" id="edit_capacidad"
+                                                    name="capacidad" value="{{ sala.capacidad }}" required>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="edit_ubicacion" class="form-label">Ubicación</label>
+                                                <input type="text" class="form-control" id="edit_ubicacion"
+                                                    name="ubicacion" value="{{ sala.ubicacion }}" required>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Cerrar</button>
+                                            <button type="submit" name="editar" class="btn btn-warning">Guardar
+                                                Cambios</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <tr>
+                            <td colspan="5" class="text-center">No hay salas disponibles.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Paginación con Bootstrap -->
+            <nav aria-label="Page navigation " class="mt-4">
+                <ul class="pagination justify-content-center mb-0">
+                    {% if salas.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ salas.previous_page_number }}" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Anterior">
+                            <span aria-hidden="true">&laquo;</span>
+                        </span>
+                    </li>
+                    {% endif %}
+                    {% for num in salas.paginator.page_range %}
+                    {% if salas.number == num %}
+                    <li class="page-item active" aria-current="page">
+                        <span class="page-link">{{ num }}</span>
+                    </li>
+                    {% elif num > salas.number|add:'-3' and num < salas.number|add:'3' %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if salas.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ salas.next_page_number }}" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link" aria-label="Siguiente">
+                            <span aria-hidden="true">&raquo;</span>
+                        </span>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<!-- Modal para agregar Sala -->
+<div class="modal fade" id="addSalaModal" tabindex="-1" aria-labelledby="addSalaModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addSalaModalLabel">Agregar Sala</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="post" action="{% url 'sala' %}">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="nombre_sala" class="form-label">Nombre de Sala</label>
+                        <input type="text" class="form-control" id="nombre_sala" name="nombre_sala"
+                            pattern="^[A-Z][a-zA-Z\s]*$"
+                            title="El nombre de la sala debe comenzar con una letra mayúscula y solo puede contener letras y espacios"
+                            required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="capacidad" class="form-label">Capacidad</label>
+                        <input type="number" class="form-control" id="capacidad" min="1" max="20"
+                            title="La capacidad debe ser un número" name="capacidad" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="ubicacion" class="form-label">Ubicación</label>
+                        <input type="text" class="form-control" id="ubicacion" name="ubicacion"
+                            placeholder="'A-103' o 'A 103'" pattern="^[A-Za-z]\s?\d{1,3}$"
+                            title="El formato debe ser 'A-103' o 'A 103'" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="submit" name="crear" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal de confirmación de Bootstrap -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmar Eliminación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar esta sala?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <!-- Formulario de Eliminación -->
+                <form method="post" action="{% url 'sala' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="sala_id" id="modalSalaId">
+                    <button type="submit" name="eliminar" class="btn btn-danger">
+                        Eliminar
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Función para abrir el modal y establecer el ID de la sala
+    function openDeleteModal(id) {
+        document.getElementById('modalSalaId').value = id; // Actualiza el campo oculto con el ID de la sala
+        new bootstrap.Modal(document.getElementById('deleteModal')).show(); // Muestra el modal
+    }
+</script>
+
+{% endblock %}

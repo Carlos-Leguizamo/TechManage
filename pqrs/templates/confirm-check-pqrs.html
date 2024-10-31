@@ -1,0 +1,47 @@
+{% extends "dashboard.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    <h4 class="card-title mb-4">Confirmación de Estado: PQRS Resuelto</h4>
+                    
+                    <!-- Condicional, si el usuario que vas a eliminar es el mismo en el que tienes la sesión iniciada -->
+                    {% if pqrs.usuario == request.user %}
+                        <!-- Mensaje si el usuario actual está intentando eliminarse a sí mismo -->
+                        <div class="alert alert-danger" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill"></i> No puedes eliminar tu propia PQRS.
+                        </div>
+                        <a href="{% url 'view-admin-pqrs' %}" class="btn btn-secondary mt-3 w-100">
+                            <i class="bi bi-arrow-left-circle"></i> Volver
+                        </a>
+                    {% else %}
+                        <!-- Formulario para eliminar a otro usuario -->
+                        <p class="mb-4">
+                            ¿Estás seguro de que deseas dar como resuelta la PQRS generada por el usuario <strong>{{ pqrs.usuario.username }}</strong>? 
+                            <br>Esta acción no se puede deshacer.
+                        </p>
+                        <form method="post" action="{% url 'confirm_delete_pqrs' pqrs.id_pqrs %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="submit" class="btn btn-success w-100">
+                                        <i class="bi bi-trash-fill"></i> Sí, dar como resuelta
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <a href="{% url 'view-admin-pqrs' %}" class="btn btn-secondary w-100">
+                                        <i class="bi bi-x-circle"></i> Cancelar
+                                    </a>
+                                </div>
+                            </div>
+                        </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,95 @@
+body{
+background-color: white;
+font-family: 'Roboto', sans-serif;
+}
+
+.card-body-custom {
+background-color: white;
+border-radius: 1rem;
+box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+padding: 2rem; 
+border: 1px solid #dee2e6;
+margin-top: 2.5rem;
+margin-bottom: 2.5rem;
+}
+
+.custom-img {
+border: 1px solid #333333;
+width: 100%;
+height: auto;
+object-fit: cover;
+border-radius: 0.5rem;
+transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.custom-img:hover {
+transform: scale(1.05);
+box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.custom-container {
+max-width: 1200px;
+}
+
+.custom-grid {
+display: grid;
+grid-template-columns: 1fr;
+gap: 2rem;
+align-items: center;
+}
+
+.titulo{
+text-align: justify;
+margin-bottom: 1rem;
+}
+
+p {
+text-align: justify;
+font-size: 20px;
+}
+
+.custom-padding {
+padding: 80px;
+}
+
+@media (min-width: 768px) {
+.custom-grid {
+grid-template-columns: 1fr 2fr;
+}
+}
+
+/* Estilos para la sección Tutoriales */
+
+.card-body-custom_tutoriales{
+background-color: #ffffff;
+border-radius: 1rem; 
+box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+padding: 2rem; 
+border: 1px solid #dee2e6;
+margin-top: 1rem;
+margin-bottom: 2.5rem;
+}
+
+.btn {
+display: inline-block; 
+padding: 10px 20px; 
+background-color:  #4CAF50;
+color: #fff; 
+border: none; 
+border-radius: 4px; 
+text-decoration: none; 
+text-align: center; 
+width: 150px; 
+max-width: 100%; 
+box-sizing: border-box; /* Incluye padding en el ancho total */
+align-self: center; /* Centra el botón en su contenedor */
+margin-top: auto; 
+}
+
+.btn:hover{
+background-color: #45a049;
+}
+
+.text-footer{
+    text-align: center;
+}

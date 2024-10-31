@@ -1,2 +1,6 @@
-# Ignorar el entorno virtual y todo su contenido...
+# Ignorar entorno virtual env
 env/
+
+# Ignorar todas las carpetas pycache
+__pycache__/
+

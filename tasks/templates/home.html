@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+  <link href="static/css/styles_home.css" rel="stylesheet" />
+  <link rel="icon" href="../static/img/icons8-settings-50.png" type="image/x-icon">
+</head>
+
+<style>
+  #clase{
+    background-color: #dfdfdf;
+    border-radius: 8px; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+</style>
+
+<main>
+  <div class="container custom-container mx-auto custom-padding card-body-custom">
+    <div class="custom-grid ">
+      <div class="w-100 p-4 ">
+        <img
+          src="https://img-cdn.pixlr.com/image-generator/history/66c48dfd82f83b0d0a23829c/0642e8ad-361d-497f-853a-ea9d4a6aba1c/preview.webp"
+          alt="Imagen descriptiva" class="custom-img">
+      </div>
+      <div>
+        <h1 class="titulo">Bienvenido a TechManage: Su Solución Integral para la Gestión de Inventario de Computadoras
+        </h1>
+        <p class="text">
+          TechManage es un sistema centralizado de gestión de inventario de computadoras que facilita el control y la
+          planificación de mantenimientos. Nuestro software le proporciona una plataforma integral para monitorizar el
+          estado de sus equipos, asegurando que cada computadora esté en óptimas condiciones y lista para su uso.
+        </p>
+        
+      </div>
+    </div>
+  </div>
+</main>
+
+<section id="tutoriales">
+  <div class="container py-5 card-body-custom_tutoriales">
+    <h2 class="section-title text-center mb-4">TUTORIALES</h2>
+    <div class="row">
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" id="clase">
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">¿Cómo registrarte?</h3>
+            <p class="card-text">Descripción breve del primer tutorial. Aprende sobre...</p>
+            <a href="link-al-tutorial-1" class="btn btn-primary mt-auto"><i class="fa fa-book"></i> Ver Tutorial</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" id="clase">
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">¿Tus primeros pasos para administrar tu inventario de computadores?</h3>
+            <p class="card-text">Descripción breve del segundo tutorial. Descubre cómo...</p>
+            <a href="link-al-tutorial-2" class="btn btn-primary mt-auto"><i class="fa fa-book"></i> Ver Tutorial</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100"  id="clase">
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">Tutorial 3</h3>
+            <p class="card-text">Descripción breve del segundo tutorial. Descubre cómo...</p>
+            <a href="link-al-tutorial-2" class="btn btn-primary mt-auto"><i class="fa fa-book"></i> Ver Tutorial</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" id="clase">
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">Tutorial 4</h3>
+            <p class="card-text">Descripción breve del segundo tutorial. Descubre cómo...</p>
+            <a href="link-al-tutorial-2" class="btn btn-primary mt-auto"><i class="fa fa-book"></i> Ver Tutorial</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" id="clase">
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">Tutorial 5</h3>
+            <p class="card-text">Descripción breve del segundo tutorial. Descubre cómo...</p>
+            <a href="link-al-tutorial-2" class="btn btn-primary mt-auto"><i class="fa fa-book"></i> Ver Tutorial</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card h-100" id="clase">
+          <div class="card-body d-flex flex-column">
+            <h3 class="card-title">Tutorial 6</h3>
+            <p class="card-text">Descripción breve del segundo tutorial. Descubre cómo...</p>
+            <a href="link-al-tutorial-2" class="btn btn-primary mt-auto"><i class="fa fa-book"></i> Ver Tutorial</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="p-footer">
+      <p class="text-footer">TechManage. Reservados todos los derechos<span id="año"></span> </p>
+  </div>
+</footer>
+
+<script>
+  const year = new Date().getFullYear();
+  document.getElementById("año").textContent = " © " + year;
+</script>
+
+{% endblock %}
