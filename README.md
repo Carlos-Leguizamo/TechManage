@@ -13,7 +13,7 @@ estado de sus equipos, asegurando que cada computadora esté en óptimas condici
 
 *** 
 
-![Interfaz](/img_readme/Readme.png "Inferfaz Cabaña")
+![Dashboard](/img/dashboard_real.jpg "Dashboard")
 
 ---
 
