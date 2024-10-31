@@ -1,4 +1,4 @@
-# TechManage
+w# TechManage
 
 **TechManage**  es un sistema centralizado de gestión de inventario de computadoras que facilita el control y la
 planificación de mantenimientos. Nuestro software le proporciona una plataforma integral para monitorizar el
@@ -13,7 +13,7 @@ estado de sus equipos, asegurando que cada computadora esté en óptimas condici
 
 *** 
 
-![Interfaz](/img_readme/Readme.png "Inferfaz Cabaña")
+![Dashboard](/img/dashboard_real.jpg "Dashboard")
 
 ---
 
