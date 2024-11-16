@@ -54,11 +54,11 @@
                         
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
-                                const descripcion = document.getElementById('id_descripcion');  // Asegúrate de que el id coincida con el generado por Django
+                                const descripcion = document.getElementById('id_descripcion');  
                                 const charCount = document.getElementById('charCount');
                                 const errorMessage = document.getElementById('error-message');
-                                const minLength = 30;  // Longitud mínima permitida
-                                const maxLength = 500; // Longitud máxima permitida
+                                const minLength = 30;  
+                                const maxLength = 500; 
                         
                                 function updateCharCount() {
                                     const length = descripcion.value.length;
@@ -67,7 +67,7 @@
                                     charCount.textContent = `Caracteres restantes: ${remaining >= 0 ? remaining : 0}`;
                                     charCount.style.color = remaining < 0 ? 'red' : 'gray';
                         
-                                    // Mostrar el mensaje de error solo si el texto es menor que el mínimo y no está vacío
+                                   
                                     if (length > 0 && length < minLength) {
                                         errorMessage.style.display = 'block';
                                     } else {
@@ -76,8 +76,8 @@
                                 }
                         
                                 function autoResize() {
-                                    descripcion.style.height = 'auto';  // Reinicia la altura para recalcular
-                                    descripcion.style.height = `${descripcion.scrollHeight}px`;  // Ajusta según el contenido
+                                    descripcion.style.height = 'auto'; 
+                                    descripcion.style.height = `${descripcion.scrollHeight}px`;  
                                 }
                         
                                 function enforceMaxLength() {
@@ -92,8 +92,8 @@
                                     enforceMaxLength();
                                 });
                         
-                                updateCharCount(); // Inicializa el contador de caracteres
-                                autoResize(); // Inicializa el tamaño del textarea sin scroll
+                                updateCharCount(); 
+                                autoResize();
                             });
                         </script>   
                               

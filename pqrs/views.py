@@ -28,7 +28,7 @@ def view_pqrs(request):
             pqrs.estado = 'pendiente'  
             pqrs.usuario = request.user  # Asociamos el usuario logueado o actual
             pqrs.save()  
-            # messages.success(request, 'Su solicitud PQRS ha sido creada con éxito.')
+            messages.success(request, 'Su solicitud PQRS ha sido creada con éxito.')
             return redirect('view-pending-pqrs') 
     else:
         form = PQRSForm()
