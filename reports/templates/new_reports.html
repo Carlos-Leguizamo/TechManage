@@ -46,6 +46,7 @@
                     <input type="text" class="form-control" id="tecnico_responsable" name="tecnico_responsable" pattern="([A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)(\s[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+)*" title="El nombre del técnico responsable debe empezar con una letra mayúscula y solo puede contener letras y espacios."  required>
                 </div>
                 <button type="submit" class="btn btn-primary">Crear Reporte</button>
+                <a href="{% url 'reports' %}" class="btn btn-secondary">Cancelar</a>
             </form>
         </div>
     </div>
