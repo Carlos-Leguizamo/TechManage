@@ -23,6 +23,7 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="text-center">Área</th>
                             <th class="text-center">Nombre</th>
                             <th class="text-center">Capacidad</th>
                             <th class="text-center">Ubicación</th>
@@ -33,6 +34,7 @@
                     <tbody>
                         {% for sala in salas %}
                         <tr>
+                            <td class="text-center">{{ sala.area }}</td>               
                             <td class="text-center">{{ sala.nombre_sala }}</td>
                             <td class="text-center">{{ sala.capacidad }}</td>
                             <td class="text-center">{{ sala.ubicacion }}</td>
@@ -71,6 +73,11 @@
                                         {% csrf_token %}
                                         <input type="hidden" name="sala_id" value="{{ sala.id_sala }}">
                                         <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label for="edit_area" class="form-label">Área</label>
+                                                <input type="text" class="form-control" id="edit_area"
+                                                    name="area" value="{{ sala.area }}" required>
+                                            </div>
                                             <div class="mb-3">
                                                 <label for="edit_nombre_sala" class="form-label">Nombre de Sala</label>
                                                 <input type="text" class="form-control" id="edit_nombre_sala"
@@ -163,6 +170,13 @@
             <form method="post" action="{% url 'sala' %}">
                 {% csrf_token %}
                 <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="area" class="form-label">Área</label>
+                        <input type="text" class="form-control" id="area" name="area"
+                            pattern="^[A-Z][a-zA-Z\s]*$"
+                            title="El nombre de la Área debe comenzar con una letra mayúscula y solo puede contener letras y espacios"
+                            required>
+                    </div>
                     <div class="mb-3">
                         <label for="nombre_sala" class="form-label">Nombre de Sala</label>
                         <input type="text" class="form-control" id="nombre_sala" name="nombre_sala"

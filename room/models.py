@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 class Sala(models.Model):
     id_sala = models.AutoField(primary_key=True)
     nombre_sala = models.CharField(max_length=45)
+    area = models.CharField(max_length=45)
     descripcion = models.TextField()
     capacidad = models.IntegerField()
     ubicacion = models.CharField(max_length=45)

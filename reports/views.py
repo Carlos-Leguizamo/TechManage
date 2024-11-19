@@ -21,6 +21,14 @@ def reports(request):
         reportes = paginator.page(1)
     except EmptyPage:
         reportes = paginator.page(paginator.num_pages)
+
+    # Incluir la información de la sala para cada reporte
+    for reporte in reportes:
+        computador = get_object_or_404(Computadores, id_computador=reporte.id_computador.id_computador)
+        sala = get_object_or_404(Sala, id_sala=computador.id_sala.id_sala)
+        reporte.sala_nombre = sala.nombre_sala
+        reporte.sala_area = sala.area
+
     return render(request, "reports.html", {'reportes': reportes})
 
 @user_passes_test(lambda u: u.is_superuser, login_url='no_auth')

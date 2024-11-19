@@ -23,16 +23,20 @@
                 <table class="table table-bordered mb-0">
                     <thead>
                         <tr>
+                            <th class="text-center align-middle">Sala</th>
+                            <th class="text-center align-middle">Área</th>
                             <th class="text-center">Nombre del Reporte</th>
-                            <th class="text-center">Fecha del Reporte</th>
+                            <th class="text-center align-middle">Fecha del Reporte</th>
                             <th class="text-center">Tipo de Mantenimiento</th>
                             <th class="text-center">Técnico Responsable</th>
-                            <th class="text-center" style="width:152px;">Acciones</th>
+                            <th class="text-center align-middle" style="width:152px;">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for reporte in reportes %}
                         <tr>
+                            <td class="text-center">{{ reporte.sala_area }}</td>
+                            <td class="text-center">{{ reporte.sala_nombre }}</td>
                             <td class="text-center">{{ reporte.nombre_reporte }}</td>
                             <td class="text-center">{{ reporte.fecha }}</td>
                             <td class="text-center">{{ reporte.tipo_mantenimiento }}</td>
